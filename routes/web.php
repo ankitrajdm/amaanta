@@ -7,9 +7,32 @@ use App\Http\Controllers\ContactController;
 use App\Http\Controllers\PageController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', [PageController::class, 'home'])->name('home');
-Route::get('/about', [PageController::class, 'about'])->name('about');
-Route::get('/contact', [PageController::class, 'contact'])->name('contact');
+Route::get('/', function () {
+    $static = public_path('index.html');
+    if (file_exists($static)) {
+        return response()->file($static);
+    }
+
+    return app()->call([App\Http\Controllers\PageController::class, 'home']);
+})->name('home');
+
+Route::get('/about', function () {
+    $static = public_path('about.html');
+    if (file_exists($static)) {
+        return response()->file($static);
+    }
+
+    return app()->call([App\Http\Controllers\PageController::class, 'about']);
+})->name('about');
+
+Route::get('/contact', function () {
+    $static = public_path('contact.html');
+    if (file_exists($static)) {
+        return response()->file($static);
+    }
+
+    return app()->call([App\Http\Controllers\PageController::class, 'contact']);
+})->name('contact');
 Route::post('/contact/enquiry', [ContactController::class, 'store'])->name('contact.store');
 
 Route::middleware('guest')->group(function (): void {

@@ -15,6 +15,7 @@ use App\Models\WebsiteSetting;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
+use Illuminate\Support\Facades\Storage;
 
 class ContentController extends Controller
 {
@@ -42,14 +43,42 @@ class ContentController extends Controller
 
     public function updateSection(Request $request, PageSection $section): RedirectResponse
     {
-        $data = $request->validate([
+        $validated = $request->validate([
             'heading' => ['required', 'string', 'max:200'],
             'content' => ['nullable', 'string'],
             'position' => ['required', 'integer', 'min:1'],
             'is_active' => ['nullable', 'boolean'],
+            'image' => ['nullable', 'file', 'mimes:jpg,jpeg,png,gif,webp', 'max:5120'],
         ]);
 
-        $data['is_active'] = (bool) ($data['is_active'] ?? false);
+        $data = [
+            'heading' => $validated['heading'],
+            'content' => $validated['content'] ?? null,
+            'position' => $validated['position'],
+            'is_active' => (bool) ($validated['is_active'] ?? false),
+        ];
+
+        // handle an uploaded image and store into meta
+        if ($request->hasFile('image') && $request->file('image')->isValid()) {
+            $path = $request->file('image')->store('uploads', 'public');
+            $url = \Illuminate\Support\Facades\Storage::url($path);
+            $meta = (array) ($section->meta ?? []);
+            $meta['image'] = $url;
+            $data['meta'] = $meta;
+        }
+
+        // merge meta from request if provided (optional JSON input)
+        if ($request->filled('meta')) {
+            try {
+                $incoming = json_decode($request->input('meta'), true);
+                if (is_array($incoming)) {
+                    $data['meta'] = array_merge((array) ($data['meta'] ?? []), $incoming);
+                }
+            } catch (\Throwable $e) {
+                // ignore invalid JSON
+            }
+        }
+
         $section->update($data);
 
         return back()->with('status', 'Section updated.');
@@ -62,7 +91,17 @@ class ContentController extends Controller
 
     public function updateSettings(Request $request): RedirectResponse
     {
-        foreach ($request->except('_token') as $key => $value) {
+        // handle file uploads (logo) using Storage (public disk)
+        if ($request->hasFile('logo')) {
+            $file = $request->file('logo');
+            if ($file->isValid()) {
+                $path = $file->store('uploads', 'public'); // e.g. uploads/abc.jpg
+                $logoPath = Storage::url($path); // /storage/uploads/abc.jpg
+                WebsiteSetting::updateOrCreate(['key' => 'logo'], ['value' => $logoPath]);
+            }
+        }
+
+        foreach ($request->except('_token', 'logo') as $key => $value) {
             WebsiteSetting::updateOrCreate(['key' => $key], ['value' => (string) $value]);
         }
 
@@ -129,12 +168,32 @@ class ContentController extends Controller
 
     public function storeGallery(Request $request): RedirectResponse
     {
-        GalleryImage::create($request->validate([
+        $data = $request->validate([
             'title' => ['required', 'string', 'max:120'],
-            'image_path' => ['required', 'string', 'max:255'],
             'event_name' => ['nullable', 'string', 'max:120'],
             'is_active' => ['nullable', 'boolean'],
-        ]));
+            'image' => ['nullable', 'file', 'mimes:jpg,jpeg,png,gif,webp', 'max:5120'],
+            'image_path' => ['nullable', 'string', 'max:255'],
+        ]);
+
+        // prefer uploaded file and use Storage
+        if ($request->hasFile('image') && $request->file('image')->isValid()) {
+            $file = $request->file('image');
+            $path = $file->store('uploads', 'public');
+            $data['image_path'] = Storage::url($path);
+        }
+
+        // require image_path now
+        if (empty($data['image_path'])) {
+            return back()->withErrors(['image' => 'Please upload an image or provide an image path.']);
+        }
+
+        GalleryImage::create([
+            'title' => $data['title'],
+            'image_path' => $data['image_path'],
+            'event_name' => $data['event_name'] ?? null,
+            'is_active' => (bool) ($data['is_active'] ?? false),
+        ]);
 
         return back()->with('status', 'Gallery image entry created.');
     }

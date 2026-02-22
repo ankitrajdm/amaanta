@@ -9,6 +9,7 @@ use App\Models\Page;
 use App\Models\Post;
 use App\Models\Testimonial;
 use App\Models\User;
+use App\Models\WebsiteSetting;
 use Illuminate\View\View;
 
 class DashboardController extends Controller
@@ -16,6 +17,9 @@ class DashboardController extends Controller
     public function index(): View
     {
         return view('admin.dashboard', [
+            'settings' => [
+                'website_name' => WebsiteSetting::getValue('website_name', 'Amaanta'),
+            ],
             'stats' => [
                 'users' => User::count(),
                 'pages' => Page::count(),
@@ -24,6 +28,10 @@ class DashboardController extends Controller
                 'gallery' => GalleryImage::count(),
                 'enquiries' => ContactEnquiry::count(),
             ],
+            'pages' => Page::with('sections')->get()->take(5),
+            'posts' => Post::latest()->take(5)->get(),
+            'gallery' => GalleryImage::latest()->take(6)->get(),
+            'testimonials' => Testimonial::latest()->take(3)->get(),
         ]);
     }
 }

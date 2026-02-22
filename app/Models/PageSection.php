@@ -12,10 +12,10 @@ class PageSection extends Model
 
     protected $fillable = ['page_id', 'section_key', 'heading', 'content', 'meta', 'position', 'is_active'];
 
-    protected function casts(): array
-    {
-        return ['meta' => 'array', 'is_active' => 'boolean'];
-    }
+    protected $casts = [
+        'meta' => 'array',
+        'is_active' => 'boolean',
+    ];
 
     public function page(): BelongsTo
     {

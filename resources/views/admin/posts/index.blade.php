@@ -1,15 +1,40 @@
-@extends('layouts.app')
+@extends('layouts.admin', ['page_title' => 'Posts', 'settings' => $settings ?? []])
+
 @section('content')
-<h1>Posts / Blog Manager</h1>
-<form method="POST" action="{{ route('admin.posts.store') }}">@csrf
-<input name="title" placeholder="Post title" required>
-<input name="slug" placeholder="post-slug" required>
-<input name="category" placeholder="Category">
-<input name="featured_image" placeholder="Image path">
-<textarea name="excerpt" placeholder="Excerpt"></textarea>
-<textarea name="content" placeholder="Content" required></textarea>
-<label><input type="checkbox" name="is_published" value="1"> Publish</label>
-<button>Create Post</button>
-</form>
-<ul>@foreach($posts as $post)<li>{{ $post->title }} - {{ $post->is_published ? 'Published' : 'Draft' }}</li>@endforeach</ul>
+<section class="section-padding">
+	<div class="container">
+		<div class="card">
+			<div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+				<h2 style="margin:0">Posts / Blog Manager</h2>
+				<a href="#" class="btn">New Post</a>
+			</div>
+
+			<div style="overflow:auto">
+				<table style="width:100%; border-collapse:collapse">
+					<thead>
+						<tr style="text-align:left; border-bottom:1px solid #eee">
+							<th style="padding:8px">Title</th>
+							<th style="padding:8px">Category</th>
+							<th style="padding:8px">Status</th>
+							<th style="padding:8px">Actions</th>
+						</tr>
+					</thead>
+					<tbody>
+					@foreach($posts as $post)
+						<tr>
+							<td style="padding:10px">{{ $post->title }}</td>
+							<td style="padding:10px">{{ $post->category }}</td>
+							<td style="padding:10px">{{ $post->is_published ? 'Published' : 'Draft' }}</td>
+							<td style="padding:10px">
+								<a href="#" class="btn secondary">Edit</a>
+								<a href="#" class="btn" style="margin-left:6px">View</a>
+							</td>
+						</tr>
+					@endforeach
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+</section>
 @endsection
