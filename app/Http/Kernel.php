@@ -10,6 +10,10 @@ class Kernel extends HttpKernel
 {
     protected $middleware = [
         \Illuminate\Foundation\Http\Middleware\CheckForMaintenanceMode::class,
+        \Illuminate\Http\Middleware\HandleCors::class,
+        \Illuminate\Foundation\Http\Middleware\ValidatePostSize::class,
+        \Illuminate\Foundation\Http\Middleware\ConvertEmptyStringsToNull::class,
+        \Illuminate\Foundation\Http\Middleware\TrimStrings::class,
     ];
 
     protected $middlewareGroups = [
@@ -26,7 +30,7 @@ class Kernel extends HttpKernel
     protected $routeMiddleware = [
         'auth' => \App\Http\Middleware\Authenticate::class,
         'guest' => \App\Http\Middleware\RedirectIfAuthenticated::class,
-        'admin' => EnsureUserIsAdmin::class,
-        'role' => EnsureUserHasRole::class,
+        'admin' => \App\Http\Middleware\EnsureUserIsAdmin::class,
+        'role' => \App\Http\Middleware\EnsureUserHasRole::class,
     ];
 }
