@@ -17,7 +17,7 @@
                         <ul class="footer-explore-list list-unstyled">
                             <li><a href="<?php echo e(route('about')); ?>">About</a></li>
                             <li><a href="<?php echo e(route('services')); ?>">Services</a></li>
-                            <li><a href="<?php echo e(route('gallery')); ?>">Gallery</a></li>
+                            <li><a href="<?php echo e(route('memorybook')); ?>">Memorybook</a></li>
                             <li><a href="<?php echo e(route('blog')); ?>">Blog</a></li>
                             <li><a href="<?php echo e(route('contact')); ?>">Contact</a></li>
                         </ul>

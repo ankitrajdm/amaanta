@@ -166,7 +166,7 @@ button {
     line-height: 1.75em;
     -webkit-transition: background-color .15s ease-out;
     transition: background-color .15s ease-out;
-    background: transparent;
+    background: #748173;
     border: 0px solid transparent;
 }
 input[type="submit"]:hover,
@@ -519,7 +519,7 @@ color: #fff;
     width: 100%;
     height: 100%;
     overflow: hidden;
-    background: #101010;
+    background: #748173;
     z-index: 999999;
 }
 #preloader {

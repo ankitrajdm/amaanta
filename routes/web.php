@@ -26,7 +26,9 @@ Route::get('/services', [PageController::class, 'services'])->name('services');
 Route::get('/services/{slug}', [PageController::class, 'serviceDetail'])->name('service.detail');
 Route::get('/blog', [PageController::class, 'blog'])->name('blog');
 Route::get('/blog/{slug}', [PageController::class, 'blogDetail'])->name('blog.detail');
+
 Route::get('/gallery', [PageController::class, 'gallery'])->name('gallery');
+Route::get('/memorybook', [PageController::class, 'gallery'])->name('memorybook');
 
 Route::get('/contact', [App\Http\Controllers\PageController::class, 'contact'])->name('contact');
 Route::post('/contact/enquiry', [ContactController::class, 'store'])->name('contact.store');
