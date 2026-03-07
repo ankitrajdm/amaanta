@@ -1,40 +1,41 @@
-@extends('layouts.admin', ['page_title' => 'Posts', 'settings' => $settings ?? []])
+@extends('admin.layout')
+
+@section('title', 'Posts')
+@section('page-title', 'Posts')
 
 @section('content')
-<section class="section-padding">
-	<div class="container">
-		<div class="card">
-			<div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
-				<h2 style="margin:0">Posts / Blog Manager</h2>
-				<a href="#" class="btn">New Post</a>
-			</div>
+<div class="row mb-4">
+    <div class="col-md-12 d-flex justify-content-between align-items-center">
+        <h1>Posts / Blog Manager</h1>
+        <a href="{{ route('admin.posts.create') }}" class="btn btn-primary"><i class="fas fa-plus"></i> New Post</a>
+    </div>
+</div>
 
-			<div style="overflow:auto">
-				<table style="width:100%; border-collapse:collapse">
-					<thead>
-						<tr style="text-align:left; border-bottom:1px solid #eee">
-							<th style="padding:8px">Title</th>
-							<th style="padding:8px">Category</th>
-							<th style="padding:8px">Status</th>
-							<th style="padding:8px">Actions</th>
-						</tr>
-					</thead>
-					<tbody>
-					@foreach($posts as $post)
-						<tr>
-							<td style="padding:10px">{{ $post->title }}</td>
-							<td style="padding:10px">{{ $post->category }}</td>
-							<td style="padding:10px">{{ $post->is_published ? 'Published' : 'Draft' }}</td>
-							<td style="padding:10px">
-								<a href="#" class="btn secondary">Edit</a>
-								<a href="#" class="btn" style="margin-left:6px">View</a>
-							</td>
-						</tr>
-					@endforeach
-					</tbody>
-				</table>
-			</div>
-		</div>
-	</div>
-</section>
+<div class="card">
+    <div class="table-responsive">
+        <table class="table table-hover mb-0">
+            <thead class="table-light">
+                <tr>
+                    <th>Title</th>
+                    <th>Category</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach($posts as $post)
+                    <tr>
+                        <td>{{ $post->title }}</td>
+                        <td>{{ $post->category }}</td>
+                        <td>{{ $post->is_published ? 'Published' : 'Draft' }}</td>
+                        <td>
+                            <a href="{{ route('admin.posts.edit', $post) }}" class="btn btn-sm btn-info">Edit</a>
+                            <a href="#" class="btn btn-sm btn-secondary">View</a>
+                        </td>
+                    </tr>
+                @endforeach
+            </tbody>
+        </table>
+    </div>
+</div>
 @endsection

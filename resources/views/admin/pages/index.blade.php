@@ -1,41 +1,59 @@
-@extends('layouts.admin', ['page_title' => 'Pages', 'settings' => $settings ?? []])
+@extends('admin.layout')
+
+@section('title', 'Pages')
 
 @section('content')
-<section class="section-padding">
-	<div class="container">
-		<div class="card">
-			<div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
-				<h2 style="margin:0">Manage Pages</h2>
-				<a href="#" class="btn">New Page</a>
-			</div>
+<div class="row mb-4">
+    <div class="col-md-12">
+        <div class="d-flex justify-content-between align-items-center">
+            <h1>Pages</h1>
+            <a href="{{ route('admin.pages.create') }}" class="btn btn-primary">
+                <i class="fas fa-plus"></i> Add New Page
+            </a>
+        </div>
+    </div>
+</div>
 
-			<div style="overflow:auto">
-				<table style="width:100%; border-collapse:collapse">
-					<thead>
-						<tr style="text-align:left; border-bottom:1px solid #eee">
-							<th style="padding:8px">Title</th>
-							<th style="padding:8px">Slug</th>
-							<th style="padding:8px">Sections</th>
-							<th style="padding:8px">Status</th>
-							<th style="padding:8px">Actions</th>
-						</tr>
-					</thead>
-					<tbody>
-					@foreach($pages as $page)
-						<tr>
-							<td style="padding:10px">{{ $page->title }}</td>
-							<td style="padding:10px">{{ $page->slug }}</td>
-							<td style="padding:10px">{{ $page->sections_count }}</td>
-							<td style="padding:10px">{{ $page->is_active ? 'Active' : 'Inactive' }}</td>
-							<td style="padding:10px">
-								<a href="{{ route('admin.pages.edit', $page) }}" class="btn secondary">Edit</a>
-							</td>
-						</tr>
-					@endforeach
-					</tbody>
-				</table>
-			</div>
-		</div>
-	</div>
-</section>
+<div class="card">
+    <div class="table-responsive">
+        <table class="table table-hover mb-0">
+            <thead class="table-light">
+                <tr>
+                    <th>Title</th>
+                    <th>Slug</th>
+                    <th>Sections</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @forelse($pages as $page)
+                    <tr>
+                        <td><strong>{{ $page->title }}</strong></td>
+                        <td><code>{{ $page->slug }}</code></td>
+                        <td><span class="badge bg-info">{{ $page->sections_count }}</span></td>
+                        <td>
+                            @if($page->is_active)
+                                <span class="badge bg-success">Active</span>
+                            @else
+                                <span class="badge bg-danger">Inactive</span>
+                            @endif
+                        </td>
+                        <td>
+                            <a href="{{ route('admin.pages.edit', $page) }}" class="btn btn-sm btn-warning">
+                                <i class="fas fa-edit"></i> Edit
+                            </a>
+                        </td>
+                    </tr>
+                @empty
+                    <tr>
+                        <td colspan="5" class="text-center py-4">
+                            <p class="text-muted">No pages found. <a href="{{ route('admin.pages.create') }}">Create one</a></p>
+                        </td>
+                    </tr>
+                @endforelse
+            </tbody>
+        </table>
+    </div>
+</div>
 @endsection

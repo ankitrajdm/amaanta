@@ -1882,6 +1882,13 @@ hr {
     margin: 0;
 }
 /* about2 */
+.about2, .team, .newsletter-bg{ font-family: 'Didact Gothic', sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 1.75em;
+    color: #ffffff;
+    overflow-x: hidden !important;
+    background: #101010;}
 .about2 h5 {
     color: #748173;
     font-size: 18px;
@@ -1925,6 +1932,7 @@ hr {
     z-index: 2;
     background: transparent;
 }
+.about-header-bg{background-image: url(/assets/img/ab-02.png);}
 /* circle */
 .about2 #circle {
   position: absolute;

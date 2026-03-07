@@ -1,0 +1,391 @@
+@extends('layouts.frontend')
+
+@section('content')
+@php
+    $sections = $page && $page->sections ? collect($page->sections)->keyBy('section_key') : collect();
+@endphp
+
+<!-- Header Banner -->
+@if(isset($sections['about_intro']))
+@php
+    $aboutIntro = $sections['about_intro'];
+    $aboutIntroMeta = $aboutIntro->meta ?? [];
+@endphp
+<div class="banner-header section-padding valign bg-img bg-fixed" data-overlay-dark="3" data-background="/assets/img/ab-02.png">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-5 slider-text js-fullheight">
+                <div class="slider-text-inner">
+                    <div class="desc text-start">
+                        <h4>{{ $aboutIntroMeta['subheading'] ?? 'Amaanta' }}</h4>
+                        <h1>{!! $aboutIntro->heading ?? 'Where Nature Meets Elegance' !!}</h1>
+                        <p>{!! $aboutIntro->content ?? 'A world-class farm in Delhi offering serene <span>natural beauty</span> for unforgettable celebrations.' !!}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- arrow down -->
+    <div class="arrow bounce text-center">
+        <a href="#" data-scroll-nav="1" class=""> <i class="ti-arrow-down"></i> </a>
+    </div>
+</div>
+@endif
+
+<!-- About -->
+@php
+    $mainContent = $sections['main_content'] ?? null;
+    $mainContentMeta = $mainContent ? ($mainContent->meta ?? []) : [];
+@endphp
+<section class="about2 cover section-padding">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 mb-30 animate-box" data-animate-effect="fadeInUp">
+                <div class="section-subtitle">{{ $mainContentMeta['subtitle'] ?? 'About Us' }}</div>
+                <div class="section-title">{{ $mainContent ? $mainContent->heading : 'Amaanta' }} <span>{{ $mainContentMeta['highlight'] ?? 'Farms' }}</span></div>
+                {!! $mainContent ? $mainContent->content : '<p> Amaanta, a world class farm in Delhi is a natural haven that provides a sense of tranquility. A variety of exotic flowers, redwood trees and intersecting gravel and flagstone paths besides the fountains make it a perfect destination and a timeless treasure for all your special events. </p><p>Amaanta has a lush green 2.5 acre farm and a semi-covered area of approximately 13,000 sq. feet and has been a landmark in the vicinity for over 8 years. We are a professionally managed company with qualified & experienced professionals from the industry who are fully equipped to cater to your every need.</p>' !!}
+                @if(isset($mainContentMeta['bullet1']) || isset($mainContentMeta['bullet2']))
+                <ul class="list-unstyled about-list mb-30">
+                    @if(isset($mainContentMeta['bullet1']))
+                    <li>
+                        <div class="about-list-icon"> <span class="ti-check"></span> </div>
+                        <div class="about-list-text">
+                            <p>{!! $mainContentMeta['bullet1'] !!}</p>
+                        </div>
+                    </li>
+                    @endif
+                    @if(isset($mainContentMeta['bullet2']))
+                    <li>
+                        <div class="about-list-icon"> <span class="ti-check"></span> </div>
+                        <div class="about-list-text">
+                            <p>{!! $mainContentMeta['bullet2'] !!}</p>
+                        </div>
+                    </li>
+                    @endif
+                </ul>
+                @endif
+            </div>
+            <div class="col-md-5 offset-md-1 animate-box" data-animate-effect="fadeInUp">
+                <div class="img-exp">
+                    <div class="about-img">
+                        <div class="img"> <img src="{{ $mainContentMeta['image'] ?? '/assets/img/about.jfif' }}" class="img-fluid" alt=""> </div>
+                    </div>
+                    <div id="circle">
+                        <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="300px" height="300px" viewBox="0 0 300 300" enable-background="new 0 0 300 300" xml:space="preserve">
+                            <defs>
+                                <path id="circlePath" d=" M 150, 150 m -60, 0 a 60,60 0 0,1 120,0 a 60,60 0 0,1 -120,0 " />
+                            </defs>
+                            <circle cx="150" cy="100" r="75" fill="none" />
+                            <g>
+                                <use xlink:href="#circlePath" fill="none" />
+                                <text fill="#ffffff">
+                                    <textPath xlink:href="#circlePath"> . Amaanta . Amaanta . Amaanta   </textPath>
+                                </text>
+                            </g>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Team/Services -->
+@if(isset($sections['services_section']))
+@php
+    $servicesSection = $sections['services_section'];
+    $servicesMeta = $servicesSection->meta ?? [];
+@endphp
+<section class="team section-padding">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 mb-30">
+                <div class="section-subtitle">{{ $servicesMeta['subtitle'] ?? 'Our Services' }}</div>
+                <div class="section-title">{{ $servicesSection->heading ?? 'Amaanta' }} <span>{{ $servicesMeta['highlight'] ?? 'Services' }}</span></div>
+            </div>
+        </div>
+        @if(isset($servicesMeta['service1_title']))
+        <div class="row">
+            <div class="col-md-6 animate-box" data-animate-effect="fadeInLeft">
+                <div class="img left">
+                    <img src="{{ $servicesMeta['service1_image'] ?? '/assets/img/services/service_list1.jpg' }}" alt="">
+                </div>
+            </div>
+            <div class="col-md-6 valign animate-box" data-animate-effect="fadeInRight">
+                <div class="content">
+                    <div class="cont text-left">
+                        <h4><span>{{ $servicesMeta['service1_title'] ?? 'Decoration' }}</span> | Events </h4>
+                        <p>{!! $servicesMeta['service1_content'] ?? 'With our romantic elegant settings, we aim to make your wedding/event an unforgettable and truly memorable one. With our focus on fine details and extensive paraphernalia backed by extensive experience, our unrivaled service will ensure that you get hitched without a hitch.' !!}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        @endif
+        @if(isset($servicesMeta['service2_title']))
+        <div class="row">
+            <div class="col-md-6 order2 valign animate-box" data-animate-effect="fadeInLeft">
+                <div class="content">
+                    <div class="cont text-left">
+                        <h4 class="white"><span>{{ $servicesMeta['service2_title'] ?? 'Luxury suites' }}</span> | Events</h4>
+                        <p>{!! $servicesMeta['service2_content'] ?? 'Nearly double the size of your average hotel room, our two luxurious suites have everything you need and more. Divine, elegant, perfectly designed and offer the epitome of decadence, indulgence, and luxury.' !!}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 order1 animate-box" data-animate-effect="fadeInRight">
+                <div class="img">
+                    <img src="{{ $servicesMeta['service2_image'] ?? '/assets/img/services/service-2.png' }}" alt="">
+                </div>
+            </div>
+        </div>
+        @endif
+    </div>
+</section>
+@endif
+
+<!-- Testimonials -->
+@if($testimonials && $testimonials->count() > 0)
+<section class="testimonials">
+    <div class="background bg-img bg-fixed section-padding pb-0" data-background="/assets/img/slider/cocktails-banner-4.png" data-overlay-dark="5">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8 offset-md-2 text-center">
+                    <div class="testimonials-box">
+                        <div class="owl-carousel owl-theme">
+                            @foreach($testimonials as $testimonial)
+                            <div class="item">
+                                <span>
+                                    <i class="star-rating"></i>
+                                    <i class="star-rating"></i>
+                                    <i class="star-rating"></i>
+                                    <i class="star-rating"></i>
+                                    <i class="star-rating"></i>
+                                </span>
+                                <h5>"{{ $testimonial->quote }}"</h5>
+                            </div>
+                            @endforeach
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+@endif
+
+<!-- FAQs -->
+@if($faqs && $faqs->count() > 0)
+@php
+    $faqSection = $sections['faq'] ?? null;
+    $faqMeta = $faqSection ? ($faqSection->meta ?? []) : [];
+@endphp
+<section class="section-padding bg-green">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 mb-30">
+                <div class="section-subtitle white">{{ $faqMeta['subtitle'] ?? 'F.A.Qs' }}</div>
+                <div class="section-title white">{{ $faqSection ? $faqSection->heading : 'Amaanta' }}<span class="white">{{ $faqMeta['highlight'] ?? 'Questions' }}</span></div>
+                {!! $faqSection ? $faqSection->content : '<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s.</p><p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>' !!}
+            </div>
+            <div class="col-md-6">
+                <div class="accordion" id="faqAccordion">
+                    @foreach($faqs as $index => $faq)
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="heading{{ $index }}">
+                            <button class="accordion-button {{ $index === 0 ? '' : 'collapsed' }}" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{ $index }}">
+                                {{ $faq->question }}
+                            </button>
+                        </h2>
+                        <div id="collapse{{ $index }}" class="accordion-collapse collapse {{ $index === 0 ? 'show' : '' }}">
+                            <div class="accordion-body">
+                                {{ $faq->answer }}
+                            </div>
+                        </div>
+                    </div>
+                    @endforeach
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+@endif
+
+<!-- Signup -->
+<section class="signup">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-6 p-0">
+                <div class="img left"> <img src="/assets/img/signup.jfif" alt=""> </div>
+            </div>
+            <div class="col-md-6 p-0 valign">
+                <div class="content">
+                    <div class="cont text-left">
+                        <h6>Sign Up</h6>
+                        <h4>Subscribe to the <span>Newsletter</span></h4>
+                        <p>For the latest inspiration and insider tips straight to your inbox.</p>
+                        <form method="post" class="contact__form" action="mail.php">
+                            <!-- form message -->
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="alert alert-success contact__msg" style="display: none" role="alert"> Your message was sent successfully. </div>
+                                </div>
+                            </div>
+                            <!-- form elements -->
+                            <div class="row">
+                                <div class="col-md-12 form-group">
+                                    <input name="name" type="text" placeholder="Full Name *" required>
+                                </div>
+                                <div class="col-md-12 form-group">
+                                    <input name="email" type="email" placeholder="Email Address *" required>
+                                </div>
+                                <div class="col-md-12">
+                                    <button class="butn-dark"><span>Subscribe</span></button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+@endsection
+                            <p>Years Experience</p>
+                        </div>
+                        <div class="col-md-6 mb-4">
+                            <h4 style="font-size: 2.5rem; color: #fff;">98%</h4>
+                            <p>Satisfaction Rate</p>
+                        </div>
+                        <div class="col-md-6 mb-4">
+                            <h4 style="font-size: 2.5rem; color: #fff;">50+</h4>
+                            <p>Team Members</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Our Services Section -->
+@if($services && $services->count() > 0)
+<section class="light-bg">
+    <div class="container">
+        <h2 class="section-heading">Our Services</h2>
+        <div class="row g-4">
+            @foreach($services->take(6) as $service)
+                <div class="col-md-4">
+                    <div class="card feature-card">
+                        <div class="card-body text-center">
+                            @if($service->icon)
+                                <i class="{{ $service->icon }}"></i>
+                            @else
+                                <i class="fas fa-gem"></i>
+                            @endif
+                            <h5 class="card-title">{{ $service->title }}</h5>
+                            <p class="card-text">{{ substr($service->description, 0, 100) }}...</p>
+                        </div>
+                    </div>
+                </div>
+            @endforeach
+        </div>
+    </div>
+</section>
+@endif
+
+<!-- FAQs Section -->
+@if($faqs && $faqs->count() > 0)
+<section>
+    <div class="container">
+        <h2 class="section-heading">Frequently Asked Questions</h2>
+        <div class="row">
+            <div class="col-lg-8 offset-lg-2">
+                <div class="accordion" id="faqAccordion">
+                    @foreach($faqs as $index => $faq)
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="heading{{ $index }}">
+                                <button class="accordion-button {{ $index === 0 ? '' : 'collapsed' }}" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{ $index }}">
+                                    {{ $faq->question }}
+                                </button>
+                            </h2>
+                            <div id="collapse{{ $index }}" class="accordion-collapse collapse {{ $index === 0 ? 'show' : '' }}" data-bs-parent="#faqAccordion">
+                                <div class="accordion-body">
+                                    {{ $faq->answer }}
+                                </div>
+                            </div>
+                        </div>
+                    @endforeach
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+@endif
+@endsection
+                        </div>
+                    @endif
+                    <div class="card-body">
+                        <h5 class="card-title" style="color: #5a006d;">{{ $member->name }}</h5>
+                        <p class="card-text text-muted">{{ $member->position }}</p>
+                        @if($member->bio ?? null)
+                            <p class="card-text small">{{ substr($member->bio, 0, 100) }}...</p>
+                        @endif
+                    </div>
+                </div>
+            </div>
+            @empty
+            <div class="col-12 text-center">
+                <p class="text-muted">Our team is composed of creative professionals dedicated to making your events memorable.</p>
+            </div>
+            @endforelse
+        </div>
+    </div>
+</section>
+
+<!-- Values Section -->
+<section class="py-5">
+    <div class="container">
+        <h2 class="text-center display-5 fw-bold mb-5" style="font-family: 'Playfair Display', serif; color: #5a006d;">Our Values</h2>
+        <div class="row g-4">
+            <div class="col-md-3">
+                <div class="text-center">
+                    <i class="fas fa-heart fa-3x mb-3" style="color: #d4af37;"></i>
+                    <h5 style="color: #5a006d;">Passion</h5>
+                    <p class="text-muted">We pour our hearts into every event we create</p>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="text-center">
+                    <i class="fas fa-handshake fa-3x mb-3" style="color: #d4af37;"></i>
+                    <h5 style="color: #5a006d;">Trust</h5>
+                    <p class="text-muted">Your vision and trust are our top priorities</p>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="text-center">
+                    <i class="fas fa-sparkles fa-3x mb-3" style="color: #d4af37;"></i>
+                    <h5 style="color: #5a006d;">Excellence</h5>
+                    <p class="text-muted">We never compromise on quality and details</p>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="text-center">
+                    <i class="fas fa-lightbulb fa-3x mb-3" style="color: #d4af37;"></i>
+                    <h5 style="color: #5a006d;">Innovation</h5>
+                    <p class="text-muted">We keep evolving with latest trends and ideas</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CTA Section -->
+<section style="background: linear-gradient(135deg, #5a006d 0%, #804da3 100%); color: white; padding: 80px 0; text-align: center;">
+    <div class="container">
+        <h2 class="display-4 fw-bold mb-3" style="font-family: 'Playfair Display', serif;">Let's Create Magic Together</h2>
+        <p class="lead mb-4">Start your journey to an unforgettable event</p>
+        <a href="/contact" class="btn btn-lg" style="background: linear-gradient(135deg, #d4af37 0%, #ffd700 100%); color: #1a0033; border: none; font-weight: bold; padding: 12px 40px;">
+            <i class="fas fa-envelope"></i> Get in Touch
+        </a>
+    </div>
+</section>
+@endsection

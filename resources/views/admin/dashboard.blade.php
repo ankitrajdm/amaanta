@@ -1,4 +1,6 @@
-@extends('layouts.admin', ['page_title' => 'Dashboard', 'settings' => $settings ?? []])
+@extends('admin.layout')
+
+@section('title', 'Dashboard')
 
 @section('content')
 <style>

@@ -1,28 +1,31 @@
-@extends('layouts.admin', ['page_title' => 'Testimonials', 'settings' => $settings ?? []])
+@extends('admin.layout')
+
+@section('title', 'Testimonials')
+@section('page-title', 'Testimonials')
 
 @section('content')
-<section class="section-padding">
-	<div class="container">
-		<div class="card">
-			<div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
-				<h2 style="margin:0">Testimonials</h2>
-				<a href="#" class="btn">Add Testimonial</a>
-			</div>
+<div class="row mb-4">
+    <div class="col-md-12 d-flex justify-content-between align-items-center">
+        <h1>Testimonials</h1>
+        <a href="{{ route('admin.testimonials.create') }}" class="btn btn-primary">
+            <i class="fas fa-plus"></i> Add Testimonial
+        </a>
+    </div>
+</div>
 
-			<div>
-				@foreach($testimonials as $t)
-					<div class="card" style="margin-bottom:10px; display:flex; gap:12px; align-items:flex-start">
-						<div style="flex:1">
-							<div style="font-weight:700">{{ $t->author_name }} <span style="color:#666; font-weight:500">— {{ $t->author_title }}</span></div>
-							<div style="color:#444; margin-top:6px">{{ $t->quote }}</div>
-						</div>
-						<div style="display:flex; gap:8px; align-items:center">
-							<a href="#" class="btn secondary">Edit</a>
-						</div>
-					</div>
-				@endforeach
-			</div>
-		</div>
-	</div>
-</section>
+<div class="card">
+    <div class="card-body">
+        @foreach($testimonials as $t)
+            <div class="mb-3 p-3 border rounded d-flex justify-content-between align-items-start">
+                <div>
+                    <strong>{{ $t->author_name }}</strong> <span class="text-muted">— {{ $t->author_title }}</span>
+                    <p class="mb-0">{{ $t->quote }}</p>
+                </div>
+                <div>
+                    <a href="{{ route('admin.testimonials.edit', $t) }}" class="btn btn-sm btn-info">Edit</a>
+                </div>
+            </div>
+        @endforeach
+    </div>
+</div>
 @endsection

@@ -1,36 +1,42 @@
-@extends('layouts.admin', ['page_title' => 'Enquiries', 'settings' => $settings ?? []])
+@extends('admin.layout')
+
+@section('title','Enquiries')
+@section('page-title','Enquiries')
 
 @section('content')
-<section class="section-padding">
-	<div class="container">
-		<div class="card">
-			<h2 style="margin-top:0">Contact Enquiries</h2>
-			<div style="overflow:auto">
-				<table style="width:100%; border-collapse:collapse;">
-					<thead>
-						<tr style="border-bottom:1px solid #eee; text-align:left">
-							<th style="padding:8px">Name</th>
-							<th style="padding:8px">Email</th>
-							<th style="padding:8px">Phone</th>
-							<th style="padding:8px">Message</th>
-							<th style="padding:8px">Date</th>
-						</tr>
-					</thead>
-					<tbody>
-					@foreach($enquiries as $enquiry)
-						<tr>
-							<td style="padding:10px">{{ $enquiry->name }}</td>
-							<td style="padding:10px">{{ $enquiry->email }}</td>
-							<td style="padding:10px">{{ $enquiry->phone }}</td>
-							<td style="padding:10px">{{ \Illuminate\Support\Str::limit($enquiry->message, 80) }}</td>
-							<td style="padding:10px">{{ $enquiry->created_at }}</td>
-						</tr>
-					@endforeach
-					</tbody>
-				</table>
-			</div>
-			<div style="margin-top:12px">{{ $enquiries->links() }}</div>
-		</div>
-	</div>
-</section>
+<div class="row mb-4">
+    <div class="col-md-12">
+        <h1>Contact Enquiries</h1>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-hover mb-0">
+                <thead class="table-light">
+                    <tr>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Phone</th>
+                        <th>Message</th>
+                        <th>Date</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach($enquiries as $enquiry)
+                        <tr>
+                            <td>{{ $enquiry->name }}</td>
+                            <td>{{ $enquiry->email }}</td>
+                            <td>{{ $enquiry->phone }}</td>
+                            <td>{{ \Illuminate\Support\Str::limit($enquiry->message, 80) }}</td>
+                            <td>{{ $enquiry->created_at }}</td>
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
+        <div class="mt-3">{{ $enquiries->links() }}</div>
+    </div>
+</div>
 @endsection
