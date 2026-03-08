@@ -55,7 +55,33 @@
                         </div>
                     </div>
                 </div>
-
+<!-- Service Sliders -->
+<?php if($sliders && $sliders->count() > 0): ?>
+<?php $__currentLoopData = $sliders; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $slider): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+<section style="padding: 80px 0; background: white;">
+    <div class="container">
+        <div class="row mb-5">
+            <div class="col-lg-12 text-center">
+                <h2 class="section-heading"><?php echo e($slider->title); ?></h2>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="owl-carousel owl-theme slider-carousel">
+                    <?php $__currentLoopData = $slider->images; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $image): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                    <div class="item">
+                        <div style="position: relative; overflow: hidden; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.15); height: 300px; background: #eee;">
+                            <img src="<?php echo e(asset('storage/' . ltrim($image->image_path, '/'))); ?>" alt="<?php echo e($slider->title); ?>" class="img-fluid image-popup" style="width: 100%; height: 100%; object-fit: cover;">
+                        </div>
+                    </div>
+                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+<?php endif; ?>
                 <!-- Service Gallery Slider -->
                 <?php if($galleryImages && $galleryImages->count() > 0): ?>
                 <section style="padding: 80px 0; background: white;">
@@ -162,7 +188,7 @@
 <script src="/assets/js/custom.js"></script>
 <script>
 $(document).ready(function(){
-    $('.event-carousel').owlCarousel({
+    $('.event-carousel, .slider-carousel').owlCarousel({
         loop: true,
         margin: 10,
         nav: true,

@@ -55,6 +55,19 @@
                         </div>
                     </div>
                 </div>
+<!-- No Content Message -->
+@if((!$sliders || $sliders->count() == 0) && (!$galleryImages || $galleryImages->count() == 0))
+<section style="padding: 80px 0; background: white;">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 mx-auto text-center">
+                <h2 class="section-heading mb-4">Gallery Coming Soon</h2>
+                <p class="lead">We're working on adding beautiful images for this service. Check back soon!</p>
+            </div>
+        </div>
+    </div>
+</section>
+@endif
 <!-- Service Sliders -->
 @if($sliders && $sliders->count() > 0)
 @foreach($sliders as $slider)
