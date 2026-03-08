@@ -63,6 +63,11 @@ class PageController extends Controller
             ->latest()
             ->get();
 
+        // Get sliders for this service
+        $sliders = \App\Models\ServiceSlider::where('service_id', $service->id)
+            ->with('images')
+            ->get();
+
         // Get events for this service with their gallery images
         $events = Event::where('service_id', $service->id)->where('is_active', true)->with(['galleryImages' => function($query) {
             $query->where('is_active', true);
@@ -72,6 +77,7 @@ class PageController extends Controller
             'service' => $service,
             'events' => $events,
             'galleryImages' => $galleryImages,
+            'sliders' => $sliders,
             'otherServices' => Service::where('is_active', true)->where('id', '!=', $service->id)->limit(3)->get(),
             'testimonials' => Testimonial::where('is_active', true)->latest()->limit(6)->get(),
             'settings' => $this->settings(),

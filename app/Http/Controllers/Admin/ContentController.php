@@ -1034,4 +1034,89 @@ class ContentController extends Controller
         $form->delete();
         return redirect()->route('admin.contact-forms.index')->with('status', 'Contact form deleted.');
     }
+
+    // Service Sliders Management
+    public function sliders(): View
+    {
+        return view('admin.slider.index', ['sliders' => \App\Models\ServiceSlider::with('service', 'images')->latest()->paginate(20)]);
+    }
+
+    public function createSlider(): View
+    {
+        return view('admin.slider.create', ['services' => \App\Models\Service::where('is_active', true)->get()]);
+    }
+
+    public function storeSlider(Request $request): RedirectResponse
+    {
+        $validated = $request->validate([
+            'service_id' => ['required', 'exists:services,id'],
+            'title' => ['required', 'string', 'max:255'],
+            'images' => ['required', 'array'],
+            'images.*' => ['file', 'mimes:jpg,jpeg,png,gif,webp', 'max:5120'],
+        ]);
+
+        $slider = \App\Models\ServiceSlider::create([
+            'service_id' => $validated['service_id'],
+            'title' => $validated['title'],
+        ]);
+
+        if ($request->hasFile('images')) {
+            foreach ($request->file('images') as $file) {
+                if ($file->isValid()) {
+                    $path = $file->store('uploads', 'public');
+                    $imagePath = Storage::url($path);
+                    \App\Models\ServiceSliderImage::create([
+                        'service_slider_id' => $slider->id,
+                        'image_path' => $imagePath,
+                    ]);
+                }
+            }
+        }
+
+        return redirect()->route('admin.sliders.index')->with('status', 'Slider created successfully.');
+    }
+
+    public function editSlider(\App\Models\ServiceSlider $slider): View
+    {
+        return view('admin.slider.edit', [
+            'slider' => $slider->load('images'),
+            'services' => \App\Models\Service::where('is_active', true)->get()
+        ]);
+    }
+
+    public function updateSlider(Request $request, \App\Models\ServiceSlider $slider): RedirectResponse
+    {
+        $validated = $request->validate([
+            'service_id' => ['required', 'exists:services,id'],
+            'title' => ['required', 'string', 'max:255'],
+            'images' => ['nullable', 'array'],
+            'images.*' => ['file', 'mimes:jpg,jpeg,png,gif,webp', 'max:5120'],
+        ]);
+
+        $slider->update([
+            'service_id' => $validated['service_id'],
+            'title' => $validated['title'],
+        ]);
+
+        if ($request->hasFile('images')) {
+            foreach ($request->file('images') as $file) {
+                if ($file->isValid()) {
+                    $path = $file->store('uploads', 'public');
+                    $imagePath = Storage::url($path);
+                    \App\Models\ServiceSliderImage::create([
+                        'service_slider_id' => $slider->id,
+                        'image_path' => $imagePath,
+                    ]);
+                }
+            }
+        }
+
+        return redirect()->route('admin.sliders.index')->with('status', 'Slider updated successfully.');
+    }
+
+    public function destroySlider(\App\Models\ServiceSlider $slider): RedirectResponse
+    {
+        $slider->delete();
+        return redirect()->route('admin.sliders.index')->with('status', 'Slider deleted successfully.');
+    }
 }

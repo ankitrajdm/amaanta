@@ -30,9 +30,28 @@
             <div class="mb-3">
                 <label for="images" class="form-label">Upload Images</label>
                 <input type="file" name="images[]" id="images" class="form-control" accept="image/*" multiple required>
+                <div id="image-preview" class="mt-3"></div>
             </div>
             <button type="submit" class="btn btn-success">Create Slider</button>
         </form>
     </div>
 </div>
+
+<script>
+document.getElementById('images').addEventListener('change', function(e) {
+    const preview = document.getElementById('image-preview');
+    preview.innerHTML = '';
+    Array.from(e.target.files).forEach(file => {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            const img = document.createElement('img');
+            img.src = e.target.result;
+            img.style.width = '100px';
+            img.style.margin = '5px';
+            preview.appendChild(img);
+        };
+        reader.readAsDataURL(file);
+    });
+});
+</script>
 @endsection

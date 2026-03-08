@@ -119,6 +119,14 @@ Route::middleware(['auth', 'role:admin,editor'])->prefix('admin')->name('admin.'
     Route::put('/gallery/{image}', [ContentController::class, 'updateGallery'])->name('gallery.update');
     Route::delete('/gallery/{image}', [ContentController::class, 'destroyGallery'])->name('gallery.destroy');
 
+    // Service Sliders Management
+    Route::get('/sliders', [ContentController::class, 'sliders'])->name('sliders.index');
+    Route::get('/sliders/create', [ContentController::class, 'createSlider'])->name('sliders.create');
+    Route::post('/sliders', [ContentController::class, 'storeSlider'])->name('sliders.store');
+    Route::get('/sliders/{slider}', [ContentController::class, 'editSlider'])->name('sliders.edit');
+    Route::put('/sliders/{slider}', [ContentController::class, 'updateSlider'])->name('sliders.update');
+    Route::delete('/sliders/{slider}', [ContentController::class, 'destroySlider'])->name('sliders.destroy');
+
     // Testimonials Management
     Route::get('/testimonials', [ContentController::class, 'testimonials'])->name('testimonials.index');
     Route::get('/testimonials/create', [ContentController::class, 'createTestimonial'])->name('testimonials.create');
