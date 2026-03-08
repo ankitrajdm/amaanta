@@ -133,13 +133,26 @@ class PageController extends Controller
 
     public function gallery(): View
     {
+        // Get gallery images grouped by title for service sliders
+        $galleryImagesByTitle = \App\Models\GalleryImage::where('is_active', true)
+            ->whereNotNull('title')
+            ->where('title', '!=', '')
+            ->select('title')
+            ->distinct()
+            ->get()
+            ->map(function($item) {
+                $images = \App\Models\GalleryImage::where('title', $item->title)
+                    ->where('is_active', true)
+                    ->get();
+                return [
+                    'title' => $item->title,
+                    'images' => $images
+                ];
+            });
+
         return view('pages.gallery', [
             'page' => Page::with('sections')->where('slug', 'gallery')->first(),
-            'events' => Event::where('is_active', true)
-                            ->with('galleryImages')
-                            ->latest('event_date')
-                            ->get(),
-            'allImages' => GalleryImage::latest()->get(),
+            'galleryImagesByTitle' => $galleryImagesByTitle,
             'settings' => $this->settings(),
         ]);
     }

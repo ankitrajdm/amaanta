@@ -14,6 +14,20 @@
     <link rel="stylesheet" href="/assets/css/plugins.css" />
     <link rel="stylesheet" href="/assets/css/style.css" />
     <link href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/css/lightbox.min.css" rel="stylesheet">
+    <style>
+        .event-carousel .item {
+            display: block !important;
+            opacity: 1 !important;
+            visibility: visible !important;
+        }
+        .owl-carousel .owl-item {
+            display: block !important;
+        }
+        .owl-carousel .owl-item:not(.active) {
+            display: block !important;
+            opacity: 1 !important;
+        }
+    </style>
 </head>
 <body>
     <!-- Navbar -->
@@ -58,52 +72,38 @@
     <!-- Gallery Section -->
     <section>
         <div class="container">
-            @forelse($events as $event)
-                @php $images = \App\Models\GalleryImage::where('event_name', $event->title)->where('is_active', true)->get(); @endphp
-                <div class="mb-5">
-                    <h2 class="section-heading" style="text-align: left;">{{ $event->title }}</h2>
-                    @if($images->count() > 0)
-                        <div class="gallery-grid">
-                            @foreach($images as $image)
-                                <div class="gallery-item">
-                                    <img src="{{ asset('storage/' . $image->image_path) }}" alt="{{ $image->title }}">
-                                    <div class="gallery-overlay">
-                                        <a href="{{ asset('storage/' . $image->image_path) }}" data-lightbox="gallery-{{ $loop->index }}" title="{{ $image->title }}">
-                                            <i class="fas fa-search-plus"></i>
-                                        </a>
+            <!-- Service Sliders/Gallery Images by Title -->
+            @if($galleryImagesByTitle && $galleryImagesByTitle->count() > 0)
+                @foreach($galleryImagesByTitle as $galleryGroup)
+                    <div class="mb-5">
+                        <h2 class="section-heading" style="text-align: center;">{{ $galleryGroup['title'] }}</h2>
+                        @if($galleryGroup['images']->count() > 0)
+                            <div class="image-slider-container">
+                                <div class="image-slider" style="display: flex; gap: 15px; overflow-x: auto; padding: 20px 0; scroll-snap-type: x mandatory; scrollbar-width: none; -ms-overflow-style: none;">
+                                    @foreach($galleryGroup['images'] as $image)
+                                    <div class="slider-item" style="flex: 0 0 300px; scroll-snap-align: start;">
+                                        <img src="{{ asset(ltrim($image->image_path, '/')) }}" alt="{{ $image->title }}" class="img-fluid image-popup" style="width: 100%; height: 300px; object-fit: cover; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.15); cursor: pointer;">
                                     </div>
+                                    @endforeach
                                 </div>
-                            @endforeach
-                        </div>
-                    @else
-                        <div class="alert alert-info">No images available for this event yet.</div>
-                    @endif
-                </div>
-                @if(!$loop->last)
-                    <hr class="my-5">
-                @endif
-            @empty
-                <div class="alert alert-info text-center">
-                    <i class="fas fa-info-circle"></i> No events with photos available at the moment.
-                </div>
-            @endforelse
-
-            <!-- All Images Gallery -->
-            @if($allImages && $allImages->count() > 0)
-                <div class="mt-5 pt-5 border-top">
-                    <h2 class="section-heading">All Gallery Images</h2>
-                    <div class="gallery-grid">
-                        @foreach($allImages as $image)
-                            <div class="gallery-item">
-                                <img src="{{ asset('storage/' . $image->image_path) }}" alt="{{ $image->title }}">
-                                <div class="gallery-overlay">
-                                    <a href="{{ asset('storage/' . $image->image_path) }}" data-lightbox="all-gallery" title="{{ $image->title }}">
-                                        <i class="fas fa-search-plus"></i>
-                                    </a>
+                                <div class="slider-nav" style="text-align: center; margin-top: 10px;">
+                                    <button class="slider-prev" style="background: #007bff; color: white; border: none; padding: 10px 15px; margin: 0 5px; border-radius: 5px; cursor: pointer;">‹ Prev</button>
+                                    <button class="slider-next" style="background: #007bff; color: white; border: none; padding: 10px 15px; margin: 0 5px; border-radius: 5px; cursor: pointer;">Next ›</button>
                                 </div>
                             </div>
-                        @endforeach
+                            <style>
+                                .image-slider::-webkit-scrollbar { display: none; }
+                                .slider-nav { display: flex; justify-content: center; gap: 10px; }
+                            </style>
+                        @endif
                     </div>
+                    @if(!$loop->last)
+                        <hr class="my-5">
+                    @endif
+                @endforeach
+            @else
+                <div class="alert alert-info text-center">
+                    <i class="fas fa-info-circle"></i> No gallery images available at the moment.
                 </div>
             @endif
         </div>
@@ -113,6 +113,22 @@
 
     @include('partials.footer')
 
+    <script src="/assets/js/jquery-3.6.3.min.js"></script>
+    <script src="/assets/js/jquery-migrate-3.0.0.min.js"></script>
+    <script src="/assets/js/modernizr-2.6.2.min.js"></script>
+    <script src="/assets/js/imagesloaded.pkgd.min.js"></script>
+    <script src="/assets/js/jquery.isotope.v3.0.2.js"></script>
+    <script src="/assets/js/pace.js"></script>
+    <script src="/assets/js/popper.min.js"></script>
+    <script src="/assets/js/bootstrap.min.js"></script>
+    <script src="/assets/js/scrollIt.min.js"></script>
+    <script src="/assets/js/jquery.waypoints.min.js"></script>
+    <script src="/assets/js/owl.carousel.min.js"></script>
+    <script src="/assets/js/jquery.stellar.min.js"></script>
+    <script src="/assets/js/jquery.magnific-popup.js"></script>
+    <script src="/assets/js/YouTubePopUp.js"></script>
+    <script src="/assets/js/smooth-scroll.min.js"></script>
+    <script src="/assets/js/custom.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/lightbox.min.js"></script>
     <script>
         lightbox.option({
@@ -120,7 +136,29 @@
             'wrapAround': true,
             'showImageNumberLabel': false,
             'albumLabel': 'Photo %1 of %2'
-        })
+        });
+
+        $(document).ready(function(){
+            $('.image-popup').magnificPopup({
+                type: 'image',
+                gallery: {
+                    enabled: true
+                }
+            });
+
+            // Slider navigation
+            $('.slider-prev').click(function(){
+                const slider = $(this).closest('.image-slider-container').find('.image-slider');
+                const itemWidth = slider.find('.slider-item').outerWidth(true);
+                slider.animate({scrollLeft: slider.scrollLeft() - itemWidth}, 300);
+            });
+
+            $('.slider-next').click(function(){
+                const slider = $(this).closest('.image-slider-container').find('.image-slider');
+                const itemWidth = slider.find('.slider-item').outerWidth(true);
+                slider.animate({scrollLeft: slider.scrollLeft() + itemWidth}, 300);
+            });
+        });
     </script>
 </body>
 </html>

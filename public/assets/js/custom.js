@@ -68,10 +68,10 @@ $(function () {
             logo = $(".navbar .logo> img");
         if (bodyScroll > 100) {
             navbar.addClass("nav-scroll");
-            logo.attr('src', '/assets/img/logonew.png');
+            logo.attr('src', 'assets/img/logonew.png');
         } else {
             navbar.removeClass("nav-scroll");
-            logo.attr('src', 'img/logonew.png');
+            logo.attr('src', 'assets/img/logonew.png');
         }
     });
     
