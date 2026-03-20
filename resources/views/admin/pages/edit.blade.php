@@ -32,7 +32,7 @@
                 <label for="slug" class="form-label">Page Slug <span class="text-danger">*</span></label>
                 <input type="text" class="form-control @error('slug') is-invalid @enderror" 
                        id="slug" name="slug" value="{{ old('slug', $page->slug) }}" required>
-                <small class="form-text text-muted">Use '/services', '/memorybook', '/gallery' routes here. Actual front-end route mapping may be swapped by admin rules.</small>
+                <small class="form-text text-muted">Use '/services', '/memorybook' routes here. Actual front-end route mapping may be swapped by admin rules.</small>
                 @error('slug')
                     <div class="invalid-feedback">{{ $message }}</div>
                 @enderror

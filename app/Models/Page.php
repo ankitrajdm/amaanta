@@ -28,7 +28,7 @@ class Page extends Model
             return 'Memorybook';
         }
 
-        if ($this->slug === 'memorybook' || $this->slug === 'gallery') {
+        if ($this->slug === 'memorybook') {
             return 'Services';
         }
 
@@ -41,7 +41,7 @@ class Page extends Model
             return 'memorybook';
         }
 
-        if (in_array($this->slug, ['memorybook', 'gallery'])) {
+        if ($this->slug === 'memorybook') {
             return 'services';
         }
 

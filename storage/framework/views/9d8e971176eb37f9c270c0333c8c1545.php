@@ -71,10 +71,12 @@
         </div>
     </div>
 
-    <?php if($servicesSection): ?>
+   
+  
+<!-- Services -->
     <section class="services section-padding">
         <div class="container">
-            <div class="row">
+                 <div class="row">
                 <div class="col-md-5 mb-30">
                     <div class="section-subtitle"><?php echo $servicesSection->heading ?? 'The experience'; ?></div>
                     <div class="section-title"><?php echo $servicesSection->content ?? 'Explore <span>Services</span>'; ?></div>
@@ -87,20 +89,9 @@
                     <?php endif; ?>
                 </div>
             </div>
-        </div>
-    </section>
-   
-    <?php endif; ?>
-  
-<!-- Services -->
-    <section class="services section-padding">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-5 mb-30">
-                    <div class="section-subtitle"><?php echo $sections['services_section']->heading ?? 'The experience'; ?></div>
-                    <div class="section-title"><?php echo $sections['services_section']->content ?? 'Explore <span>Services</span>'; ?></div>
-                </div>
-            </div>
+
+
+
             <div class="row">
                 <div class="col-md-12">
                     <div class="owl-carousel owl-theme">

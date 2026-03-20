@@ -23,7 +23,7 @@ class ContentController extends Controller
 {
     public function pages(): View
     {
-        return view('admin.pages.index', ['pages' => Page::withCount('sections')->get()]);
+        return view('admin.pages.index', ['pages' => Page::where('slug', '!=', 'gallery')->withCount('sections')->get()]);
     }
 
     public function editPage(Page $page): View
@@ -35,7 +35,7 @@ class ContentController extends Controller
     {
         $validated = $request->validate([
             'title' => ['required', 'string', 'max:120'],
-            'slug' => ['required', 'string', 'max:120', 'regex:/^[a-z0-9\-]+$/'],
+            'slug' => ['required', 'string', 'max:120', 'regex:/^[a-z0-9\-]+$/', 'not_in:gallery'],
             'meta_title' => ['nullable', 'string', 'max:160'],
             'meta_description' => ['nullable', 'string', 'max:255'],
             'is_active' => ['nullable', 'boolean'],
@@ -44,7 +44,7 @@ class ContentController extends Controller
         // Enforce desired mapping at save time
         if ($validated['slug'] === 'services') {
             $validated['title'] = 'Memorybook';
-        } elseif (in_array($validated['slug'], ['memorybook', 'gallery'])) {
+        } elseif ($validated['slug'] === 'memorybook') {
             $validated['title'] = 'Services';
         }
 
@@ -729,7 +729,7 @@ class ContentController extends Controller
     {
         Page::create($request->validate([
             'title' => ['required', 'string', 'max:120'],
-            'slug' => ['required', 'string', 'max:180', 'unique:pages'],
+            'slug' => ['required', 'string', 'max:180', 'unique:pages', 'not_in:gallery'],
             'meta_title' => ['nullable', 'string', 'max:160'],
             'meta_description' => ['nullable', 'string', 'max:255'],
             'is_active' => ['nullable', 'boolean'],
