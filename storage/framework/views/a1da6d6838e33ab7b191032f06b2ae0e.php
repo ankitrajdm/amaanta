@@ -1,12 +1,12 @@
 
 
-<?php $__env->startSection('title', 'Services'); ?>
+<?php $__env->startSection('title', 'Memorybook'); ?>
 
 <?php $__env->startSection('content'); ?>
 <div class="row mb-4">
     <div class="col-md-12">
         <div class="d-flex justify-content-between align-items-center">
-            <h1>Services</h1>
+            <h1>Memorybook</h1>
             <a href="<?php echo e(route('admin.services.create')); ?>" class="btn btn-primary">
                 <i class="fas fa-plus"></i> Add Service
             </a>

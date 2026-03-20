@@ -29,8 +29,8 @@
             <tbody>
                 <?php $__empty_1 = true; $__currentLoopData = $pages; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $page): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
                     <tr>
-                        <td><strong><?php echo e($page->title); ?></strong></td>
-                        <td><code><?php echo e($page->slug); ?></code></td>
+                        <td><strong><?php echo e($page->admin_title); ?></strong></td>
+                        <td><code><?php echo e($page->admin_slug); ?></code></td>
                         <td><span class="badge bg-info"><?php echo e($page->sections_count); ?></span></td>
                         <td>
                             <?php if($page->is_active): ?>

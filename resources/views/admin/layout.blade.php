@@ -48,7 +48,7 @@
                     
                     <h6 class="mt-3 px-3" style="color: #bdc3c7;">Features</h6>
                     <a href="{{ route('admin.services.index') }}" class="@if(request()->routeIs('admin.services.*')) active @endif">
-                        <i class="fas fa-cogs"></i> Services
+                        <i class="fas fa-cogs"></i> Memorybook
                     </a>
                     <a href="{{ route('admin.events.index') }}" class="@if(request()->routeIs('admin.events.*')) active @endif">
                         <i class="fas fa-calendar"></i> Events

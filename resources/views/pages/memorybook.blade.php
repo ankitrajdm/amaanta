@@ -1,6 +1,8 @@
 
 @php
     $settings = \App\Models\WebsiteSetting::pluck('value', 'key')->toArray();
+    $sections = isset($page) ? ($page->sections->keyBy('section_key') ?? collect()) : collect();
+    $sharedServicesSection = $sections['services_section'] ?? ($sections['services'] ?? null);
 @endphp
 <!DOCTYPE html>
 <html lang="zxx">
@@ -56,9 +58,9 @@
                 <div class="col-md-5 slider-text js-fullheight">
                     <div class="slider-text-inner">
                         <div class="desc text-start">
-                            <h4>Memorybook</h4>
-                            <h1>Captured Moments</h1>
-                            <p>Relive the best memories from our events and celebrations.</p>
+                            <h4>Services</h4>
+                            <h1>Our Services</h1>
+                            <p>Discover our professional service offerings for your event.</p>
                         </div>
                     </div>
                 </div>
@@ -69,47 +71,58 @@
         </div>
     </div>
 
-    <!-- Gallery Section -->
-    <section>
+    @if($servicesSection)
+    <section class="services section-padding">
         <div class="container">
-            <!-- Service Sliders/Gallery Images by Title -->
-            @if($galleryImagesByTitle && $galleryImagesByTitle->count() > 0)
-                @foreach($galleryImagesByTitle as $galleryGroup)
-                    <div class="mb-5">
-                        <h2 class="section-heading" style="text-align: center;">{{ $galleryGroup['title'] }}</h2>
-                        @if($galleryGroup['images']->count() > 0)
-                            <div class="image-slider-container">
-                                <div class="image-slider" style="display: flex; gap: 15px; overflow-x: auto; padding: 20px 0; scroll-snap-type: x mandatory; scrollbar-width: none; -ms-overflow-style: none;">
-                                    @foreach($galleryGroup['images'] as $image)
-                                    <div class="slider-item" style="flex: 0 0 300px; scroll-snap-align: start;">
-                                        <img src="{{ asset(ltrim($image->image_path, '/')) }}" alt="{{ $image->title }}" class="img-fluid image-popup" style="width: 100%; height: 300px; object-fit: cover; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.15); cursor: pointer;">
-                                    </div>
-                                    @endforeach
-                                </div>
-                                <div class="slider-nav" style="text-align: center; margin-top: 10px;">
-                                    <button class="slider-prev" style="background: #007bff; color: white; border: none; padding: 10px 15px; margin: 0 5px; border-radius: 5px; cursor: pointer;">‹ Prev</button>
-                                    <button class="slider-next" style="background: #007bff; color: white; border: none; padding: 10px 15px; margin: 0 5px; border-radius: 5px; cursor: pointer;">Next ›</button>
-                                </div>
-                            </div>
-                            <style>
-                                .image-slider::-webkit-scrollbar { display: none; }
-                                .slider-nav { display: flex; justify-content: center; gap: 10px; }
-                            </style>
-                        @endif
-                    </div>
-                    @if(!$loop->last)
-                        <hr class="my-5">
-                    @endif
-                @endforeach
-            @else
-                <div class="alert alert-info text-center">
-                    <i class="fas fa-info-circle"></i> No gallery images available at the moment.
+            <div class="row">
+                <div class="col-md-5 mb-30">
+                    <div class="section-subtitle">{!! $servicesSection->heading ?? 'The experience' !!}</div>
+                    <div class="section-title">{!! $servicesSection->content ?? 'Explore <span>Services</span>' !!}</div>
                 </div>
-            @endif
+                <div class="col-md-7 mb-30">
+                    @if(isset($servicesSection->meta['description']))
+                        <p>{!! $servicesSection->meta['description'] !!}</p>
+                    @else
+                        <p>Professional Wedding & Event Planner surabit aliquet orci elit gene tristisue in lorem dream vitae alisuam tincidunt felis sed gravida aliquam nemue libero hendrerit magna sit amenta the mollis lacus huam maurisine alisuam erat volutfat.</p>
+                    @endif
+                </div>
+            </div>
         </div>
     </section>
-
    
+    @endif
+  
+<!-- Services -->
+    <section class="services section-padding">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-5 mb-30">
+                    <div class="section-subtitle">{!! $sections['services_section']->heading ?? 'The experience' !!}</div>
+                    <div class="section-title">{!! $sections['services_section']->content ?? 'Explore <span>Services</span>' !!}</div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="owl-carousel owl-theme">
+                        @foreach($services as $service)
+                        <div class="item">
+                            <div class="position-re o-hidden"> <img src="{{ $service->image ?? '/assets/img/services/default.jpg' }}" alt=""> </div>
+                            <div class="con">
+                                <h5><a href="{{ route('services.detail', $service->slug) }}">{{ $service->title }} <span>{{ $service->slug }}</span></a> </h5>
+                                <div class="line"></div>
+                                <div class="row facilities">
+                                    <div class="col-md-12 text-right">
+                                        <div class="permalink"><a href="{{ route('services.detail', $service->slug) }}">Explore <i class="ti-arrow-right"></i></a></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        @endforeach
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
     @include('partials.footer')
 

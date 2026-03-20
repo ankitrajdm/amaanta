@@ -91,7 +91,7 @@
                     <li class="nav-item"><a class="nav-link" href="<?php echo e(route('home')); ?>">Home</a></li>
                     <li class="nav-item"><a class="nav-link" href="<?php echo e(route('about')); ?>">About</a></li>
                     <li class="nav-item"><a class="nav-link" href="<?php echo e(route('services')); ?>">Services</a></li>
-                    <li class="nav-item"><a class="nav-link" href="<?php echo e(route('gallery')); ?>">Memorybook</a></li>
+                    <li class="nav-item"><a class="nav-link" href="<?php echo e(route('memorybook')); ?>">Memorybook</a></li>
                     <li class="nav-item"><a class="nav-link active" href="<?php echo e(route('contact')); ?>">Contact</a></li>
                 </ul>
             </div>
@@ -244,7 +244,7 @@
                             <li><a href="<?php echo e(route('home')); ?>">Home</a></li>
                             <li><a href="<?php echo e(route('about')); ?>">About</a></li>
                             <li><a href="<?php echo e(route('services')); ?>">Services</a></li>
-                            <li><a href="<?php echo e(route('gallery')); ?>">Gallery</a></li>
+                            <li><a href="<?php echo e(route('memorybook')); ?>">Memorybook</a></li>
                             <li><a href="<?php echo e(route('blog')); ?>">Blog</a></li>
                             <li><a href="<?php echo e(route('contact')); ?>">Contact</a></li>
                         </ul>

@@ -91,7 +91,7 @@
                     <li class="nav-item"><a class="nav-link" href="{{ route('home') }}">Home</a></li>
                     <li class="nav-item"><a class="nav-link" href="{{ route('about') }}">About</a></li>
                     <li class="nav-item"><a class="nav-link" href="{{ route('services') }}">Services</a></li>
-                    <li class="nav-item"><a class="nav-link" href="{{ route('gallery') }}">Memorybook</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{ route('memorybook') }}">Memorybook</a></li>
                     <li class="nav-item"><a class="nav-link active" href="{{ route('contact') }}">Contact</a></li>
                 </ul>
             </div>
@@ -243,7 +243,7 @@
                             <li><a href="{{ route('home') }}">Home</a></li>
                             <li><a href="{{ route('about') }}">About</a></li>
                             <li><a href="{{ route('services') }}">Services</a></li>
-                            <li><a href="{{ route('gallery') }}">Gallery</a></li>
+                            <li><a href="{{ route('memorybook') }}">Memorybook</a></li>
                             <li><a href="{{ route('blog') }}">Blog</a></li>
                             <li><a href="{{ route('contact') }}">Contact</a></li>
                         </ul>

@@ -48,7 +48,7 @@
                     
                     <h6 class="mt-3 px-3" style="color: #bdc3c7;">Features</h6>
                     <a href="<?php echo e(route('admin.services.index')); ?>" class="<?php if(request()->routeIs('admin.services.*')): ?> active <?php endif; ?>">
-                        <i class="fas fa-cogs"></i> Services
+                        <i class="fas fa-cogs"></i> Memorybook
                     </a>
                     <a href="<?php echo e(route('admin.events.index')); ?>" class="<?php if(request()->routeIs('admin.events.*')): ?> active <?php endif; ?>">
                         <i class="fas fa-calendar"></i> Events

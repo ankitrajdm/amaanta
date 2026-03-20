@@ -1,11 +1,11 @@
 @extends('admin.layout')
 
-@section('title', isset($service) ? 'Edit Service' : 'Create Service')
+@section('title', isset($service) ? 'Edit Memorybook Item' : 'Create Memorybook Item')
 
 @section('content')
 <div class="row mb-4">
     <div class="col-md-12">
-        <h1>{{ isset($service) ? 'Edit Service' : 'Create Service' }}</h1>
+        <h1>{{ isset($service) ? 'Edit Memorybook Item' : 'Create Memorybook Item' }}</h1>
     </div>
 </div>
 
@@ -88,7 +88,7 @@
 
             <div class="form-group">
                 <button type="submit" class="btn btn-success">
-                    <i class="fas fa-save"></i> {{ isset($service) ? 'Update' : 'Create' }} Service
+                    <i class="fas fa-save"></i> {{ isset($service) ? 'Update' : 'Create' }} Memorybook Item
                 </button>
                 <a href="{{ route('admin.services.index') }}" class="btn btn-secondary">Cancel</a>
             </div>

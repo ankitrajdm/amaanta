@@ -33,12 +33,22 @@ class ContentController extends Controller
 
     public function updatePage(Request $request, Page $page): RedirectResponse
     {
-        $page->update($request->validate([
+        $validated = $request->validate([
             'title' => ['required', 'string', 'max:120'],
+            'slug' => ['required', 'string', 'max:120', 'regex:/^[a-z0-9\-]+$/'],
             'meta_title' => ['nullable', 'string', 'max:160'],
             'meta_description' => ['nullable', 'string', 'max:255'],
             'is_active' => ['nullable', 'boolean'],
-        ]));
+        ]);
+
+        // Enforce desired mapping at save time
+        if ($validated['slug'] === 'services') {
+            $validated['title'] = 'Memorybook';
+        } elseif (in_array($validated['slug'], ['memorybook', 'gallery'])) {
+            $validated['title'] = 'Services';
+        }
+
+        $page->update($validated);
 
         return back()->with('status', 'Page updated.');
     }
@@ -277,6 +287,63 @@ class ContentController extends Controller
         }
 
         $section->update($data);
+
+        // Keep about services_section in sync, and move services section to memorybook+services to support page swapping.
+        $sectionKey = $data['section_key'] ?? $section->section_key;
+
+        if ($sectionKey === 'services_section') {
+            $syncData = [
+                'heading' => $section->heading,
+                'content' => $section->content,
+                'meta' => $section->meta,
+                'position' => $section->position,
+                'is_active' => $section->is_active,
+            ];
+
+            $aboutPage = Page::where('slug', 'about')->first();
+            $servicesPage = Page::where('slug', 'services')->first();
+
+            if ($aboutPage) {
+                PageSection::updateOrCreate(
+                    ['page_id' => $aboutPage->id, 'section_key' => 'services_section'],
+                    $syncData
+                );
+            }
+
+            if ($servicesPage) {
+                PageSection::updateOrCreate(
+                    ['page_id' => $servicesPage->id, 'section_key' => 'services_section'],
+                    $syncData
+                );
+            }
+        }
+
+        if ($sectionKey === 'services') {
+            $syncData = [
+                'heading' => $section->heading,
+                'content' => $section->content,
+                'meta' => $section->meta,
+                'position' => $section->position,
+                'is_active' => $section->is_active,
+            ];
+
+            $servicesPage = Page::where('slug', 'services')->first();
+            $memorybookPage = Page::where('slug', 'memorybook')->first();
+
+            if ($servicesPage) {
+                PageSection::updateOrCreate(
+                    ['page_id' => $servicesPage->id, 'section_key' => 'services'],
+                    $syncData
+                );
+            }
+
+            if ($memorybookPage) {
+                PageSection::updateOrCreate(
+                    ['page_id' => $memorybookPage->id, 'section_key' => 'services'],
+                    $syncData
+                );
+            }
+        }
 
         return back()->with('status', 'Section updated.');
     }

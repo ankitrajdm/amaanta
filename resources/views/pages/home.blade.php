@@ -87,8 +87,8 @@
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item"><a class="nav-link active" href="{{ route('home') }}">Home</a></li>
                     <li class="nav-item"><a class="nav-link" href="{{ route('about') }}">About</a></li>
-                    <li class="nav-item"><a class="nav-link" href="{{ route('services') }}">Services</a></li>
-                    <li class="nav-item"><a class="nav-link" href="{{ route('gallery') }}">Memorybook</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{ route('services') }}">Memorybook</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{ route('memorybook') }}">Services</a></li>
                     <li class="nav-item"><a class="nav-link" href="{{ route('contact') }}">Contact</a></li>
                 </ul>
             </div>
@@ -170,11 +170,11 @@
                         <div class="item">
                             <div class="position-re o-hidden"> <img src="{{ $service->image ?? '/assets/img/services/default.jpg' }}" alt=""> </div>
                             <div class="con">
-                                <h5><a href="{{ route('service.detail', $service->slug) }}">{{ $service->title }} <span>{{ $service->slug }}</span></a> </h5>
+                                <h5><a href="{{ route('services.detail', $service->slug) }}">{{ $service->title }} <span>{{ $service->slug }}</span></a> </h5>
                                 <div class="line"></div>
                                 <div class="row facilities">
                                     <div class="col-md-12 text-right">
-                                        <div class="permalink"><a href="{{ route('service.detail', $service->slug) }}">Explore <i class="ti-arrow-right"></i></a></div>
+                                        <div class="permalink"><a href="{{ route('services.detail', $service->slug) }}">Explore <i class="ti-arrow-right"></i></a></div>
                                     </div>
                                 </div>
                             </div>
@@ -262,50 +262,6 @@
                                 <i class="ti-control-play"></i>
                             </span> </div>
                     </a>
-                </div>
-            </div>
-        </div>
-    </section>
-    <!-- Portfolio -->
-    <section class="portfolio section-padding">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-12 mb-30">
-                    <div class="section-subtitle">Events</div>
-                    <div class="section-title">Our <span>Memorybook</span></div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-12">
-                <div class="owl-carousel owl-theme">
-                    @foreach($gallery as $image)
-                    <div class="square-flip">
-                        <div class="square bg-img" data-background="{{ strpos($image->image_path, 'http') === 0 || strpos($image->image_path, '/') === 0 ? $image->image_path : '/storage/' . $image->image_path }}">
-                            <div class="square-container d-flex align-items-end justify-content-end">
-                                <div class="box-title">
-                                    <h4>{{ strtoupper(substr($image->title,0,1)) }}</h4>
-                                    <h6>{{ $image->event_name }}</h6>
-                                </div>
-                            </div>
-                            <div class="flip-overlay"></div>
-                        </div>
-                        <div class="square2 bg-green">
-                            <div class="square-container2">
-                                <h4>{{ $image->event_name }}</h4>
-                                <p>{{ $image->title }}</p>
-                                <div class="row portfolio-list mb-30">
-                                    <div class="col-md-12">
-                                        <ul>
-                                            <li>{{ $image->title }}</li>
-                                        </ul>
-                                    </div>
-                                </div>
-                                <div class="btn-line"><a href="#">Find out more</a></div>
-                            </div>
-                        </div>
-                    </div>
-                    @endforeach
-                </div>
                 </div>
             </div>
         </div>
@@ -398,7 +354,7 @@
                         <ul class="footer-explore-list list-unstyled">
                             <li><a href="{{ route('about') }}">About</a></li>
                             <li><a href="{{ route('services') }}">Services</a></li>
-                            <li><a href="{{ route('gallery') }}">Gallery</a></li>
+                            <li><a href="{{ route('memorybook') }}">Memorybook</a></li>
                             <li><a href="{{ route('blog') }}">Blog</a></li>
                             <li><a href="{{ route('contact') }}">Contact</a></li>
                         </ul>

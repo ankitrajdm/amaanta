@@ -17,19 +17,26 @@ Route::redirect('/about.html', '/about');
 Route::redirect('/contact.html', '/contact');
 Route::redirect('/services.html', '/services');
 Route::redirect('/blog.html', '/blog');
-Route::redirect('/gallery.html', '/gallery');
-Route::redirect('/memorybook.html', '/gallery');
+Route::redirect('/gallery.html', '/memorybook');
+Route::redirect('/memorybook.html', '/memorybook');
 
 Route::get('/about', [App\Http\Controllers\PageController::class, 'about'])->name('about');
 
 Route::get('/services', [PageController::class, 'services'])->name('services');
-Route::get('/services/{slug}', [PageController::class, 'serviceDetail'])->name('service.detail');
+Route::get('/services/{slug}', function ($slug) {
+    return redirect()->route('memorybook.detail', ['slug' => $slug]);
+})->name('services.detail');
 Route::get('/blog', [PageController::class, 'blog'])->name('blog');
 Route::get('/blog/{slug}', [PageController::class, 'blogDetail'])->name('blog.detail');
 
-Route::get('/gallery', [PageController::class, 'gallery'])->name('gallery');
-Route::get('/memorybook', [PageController::class, 'gallery'])->name('memorybook');
+Route::get('/gallery', function () {
+    return redirect()->route('memorybook');
+})->name('gallery');
+Route::get('/memorybook', [PageController::class, 'memorybook'])->name('memorybook');
+Route::get('/memorybook/{slug}', [PageController::class, 'serviceDetail'])->name('memorybook.detail');
 
+Route::get('/terms-and-conditions', [App\Http\Controllers\PageController::class, 'terms'])->name('terms');
+Route::get('/terms-of-services', [App\Http\Controllers\PageController::class, 'termsOfServices'])->name('terms.of.services');
 Route::get('/contact', [App\Http\Controllers\PageController::class, 'contact'])->name('contact');
 Route::post('/contact/enquiry', [ContactController::class, 'store'])->name('contact.store');
 

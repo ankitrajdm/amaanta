@@ -90,7 +90,7 @@
                     <li class="nav-item"><a class="nav-link" href="{{ route('home') }}">Home</a></li>
                     <li class="nav-item"><a class="nav-link active" href="{{ route('about') }}">About</a></li>
                     <li class="nav-item"><a class="nav-link" href="{{ route('services') }}">Services</a></li>
-                    <li class="nav-item"><a class="nav-link" href="{{ route('gallery') }}">Memorybook</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{ route('memorybook') }}">Memorybook</a></li>
                     <li class="nav-item"><a class="nav-link" href="{{ route('contact') }}">Contact</a></li>
                 </ul>
             </div>
@@ -171,21 +171,22 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-12 mb-30">
-                    <div class="section-subtitle">{{ $sections['services_section']->meta['subtitle'] ?? 'Our Services' }}</div>
-                    <div class="section-title">{{ $sections['services_section']->heading ?? 'Amaanta' }} <span>{{ $sections['services_section']->meta['highlight'] ?? 'Services' }}</span></div>
+                    @php $sharedServicesSection = $sections['services_section'] ?? ($sections['services'] ?? null); @endphp
+    <div class="section-subtitle">{{ $sharedServicesSection?->meta['subtitle'] ?? 'Our Services' }}</div>
+                    <div class="section-title">{{ $sharedServicesSection?->heading ?? 'Amaanta' }} <span>{{ $sharedServicesSection?->meta['highlight'] ?? 'Services' }}</span></div>
                 </div>
             </div>
             <div class="row">
                 <div class="col-md-6 animate-box" data-animate-effect="fadeInLeft">
                     <div class="img left">
-                        <img src="{{ asset($sections['services_section']->meta['service1_image'] ?? 'assets/img/services/service_list1.jpg') }}" alt="">
+                        <img src="{{ asset($sharedServicesSection->meta['service1_image'] ?? 'assets/img/services/service_list1.jpg') }}" alt="">
                     </div>
                 </div>
                 <div class="col-md-6 valign animate-box" data-animate-effect="fadeInRight">
                     <div class="content">
                         <div class="cont text-left">
-                            <h4><span>{{ $sections['services_section']->meta['service1_title'] ?? 'Decoration' }}</span> | Events </h4>
-                            <p>{{ $sections['services_section']->meta['service1_content'] ?? '' }}</p>
+                            <h4><span>{{ $sharedServicesSection->meta['service1_title'] ?? 'Decoration' }}</span> | Events </h4>
+                            <p>{{ $sharedServicesSection->meta['service1_content'] ?? '' }}</p>
                         </div>
                     </div>
                 </div>
@@ -194,14 +195,14 @@
                 <div class="col-md-6 order2 valign animate-box" data-animate-effect="fadeInLeft">
                     <div class="content">
                         <div class="cont text-left">
-                            <h4 class="white"><span>{{ $sections['services_section']->meta['service2_title'] ?? 'Luxury suites' }}</span> | Events</h4>
-                            <p>{{ $sections['services_section']->meta['service2_content'] ?? '' }}</p>
+                            <h4 class="white"><span>{{ $sharedServicesSection->meta['service2_title'] ?? 'Luxury suites' }}</span> | Events</h4>
+                            <p>{{ $sharedServicesSection->meta['service2_content'] ?? '' }}</p>
                         </div>
                     </div>
                 </div>
                 <div class="col-md-6 order1 animate-box" data-animate-effect="fadeInRight">
                     <div class="img">
-                        <img src="{{ asset($sections['services_section']->meta['service2_image'] ?? 'assets/img/services/service-2.png') }}" alt="">
+                        <img src="{{ asset($sharedServicesSection->meta['service2_image'] ?? 'assets/img/services/service-2.png') }}" alt="">
                     </div>
                 </div>
             </div>
@@ -313,56 +314,8 @@
         </div>
     </section>
 
-    
-<footer class="footer">
-    <div class="footer-top">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-4">
-                    <div class="footer-column footer-about">
-                        <h3 class="footer-title">About Amaanta</h3>
-                        <p class="footer-about-text">{{ $settings['about_us'] ?? 'Amaanta, a world class farm in Delhi is a natural haven that provides a sense of tranquility. A variety of exotic flowers, redwood trees and intersecting gravel and flagstone paths besides the fountains make it a perfect destination and a timeless treasure for all your special events.' }}</p>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="footer-column footer-explore">
-                        <h3 class="footer-title">Explore</h3>
-                        <ul class="footer-explore-list">
-                            <li><a href="{{ route('home') }}">Home</a></li>
-                            <li><a href="{{ route('about') }}">About</a></li>
-                            <li><a href="{{ route('services') }}">Services</a></li>
-                            <li><a href="{{ route('gallery') }}">Gallery</a></li>
-                            <li><a href="{{ route('blog') }}">Blog</a></li>
-                            <li><a href="{{ route('contact') }}">Contact</a></li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="footer-column footer-contact">
-                        <h3 class="footer-title">Get in touch</h3>
-                        <p class="footer-contact-text">{{ $settings['address'] ?? '68-73 Bijwasan Road, Kapashera, New Delhi - 37' }}</p>
-                        <div class="footer-contact-info">
-                            <p class="footer-contact-phone"><span class="ti-headphone-alt"></span> {{ $settings['contact_no'] ?? '+91-9971009669' }}</p>
-                            <p class="footer-contact-mail">{{ $settings['contact_email'] ?? 'gm.amaanta@gmail.com' }}</p>
-                        </div>
-                        <div class="footer-about-social-list"> <a href="#"><i class="ti-instagram"></i></a> <a href="#"><i class="ti-twitter"></i></a> <a href="#"><i class="ti-youtube"></i></a> <a href="https://www.facebook.com/amaantafarms/"><i class="ti-facebook"></i></a>  </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="footer-bottom">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="footer-bottom-inner">
-                        <p class="footer-bottom-copy-right">© Copyright {{ now()->year }} by <a href="/" target="_blank">Amaanta</a></p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</footer>
+  
+    @include('partials.footer')
 
 <!-- Scripts same as static -->
 <script src="/assets/js/jquery-3.6.3.min.js"></script>

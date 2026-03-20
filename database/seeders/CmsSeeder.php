@@ -31,9 +31,11 @@ class CmsSeeder extends Seeder
 
         $home = Page::updateOrCreate(['slug' => 'home'], ['title' => 'Home', 'is_active' => true]);
         $about = Page::updateOrCreate(['slug' => 'about'], ['title' => 'About Us', 'is_active' => true]);
-        $services = Page::updateOrCreate(['slug' => 'services'], ['title' => 'Services', 'is_active' => true]);
-        $gallery = Page::updateOrCreate(['slug' => 'gallery'], ['title' => 'Memorybook & Gallery', 'is_active' => true]);
+        $services = Page::updateOrCreate(['slug' => 'services'], ['title' => 'Memorybook', 'is_active' => true]);
+        $memorybook = Page::updateOrCreate(['slug' => 'memorybook'], ['title' => 'Services', 'is_active' => true]);
         $contact = Page::updateOrCreate(['slug' => 'contact'], ['title' => 'Contact Us', 'is_active' => true]);
+        $terms = Page::updateOrCreate(['slug' => 'terms-and-conditions'], ['title' => 'Terms & Conditions', 'is_active' => true]);
+        $termsOfService = Page::updateOrCreate(['slug' => 'terms-of-services'], ['title' => 'Terms of Services', 'is_active' => true]);
         // blog page for listing posts – editable banner
         $blogPage = Page::updateOrCreate(['slug' => 'blog'], ['title' => 'Blog', 'is_active' => true]);
 
@@ -100,8 +102,53 @@ class CmsSeeder extends Seeder
             $about->sections()->updateOrCreate(['section_key' => $section['section_key']], $section + ['position' => $idx + 1, 'is_active' => true]);
         }
 
-        // Services page hero section
+        // Services page hero section (memorybook content)
         $services->sections()->updateOrCreate(
+            ['section_key' => 'hero'],
+            [
+                'heading' => 'Memorybook',
+                'content' => 'Relive our captured moments and event highlights',
+                'meta' => json_encode(['subtitle' => 'Memorybook']),
+                'position' => 1,
+                'is_active' => true,
+            ]
+        );
+
+        // Services page content section (shares about services_section in admin)
+        $services->sections()->updateOrCreate(
+            ['section_key' => 'services_section'],
+            [
+                'heading' => 'Amaanta Services',
+                'content' => 'Our comprehensive services for your special events.',
+                'meta' => json_encode([
+                    'subtitle' => 'Our Services',
+                    'highlight' => 'Services',
+                    'service1_title' => 'Decoration',
+                    'service1_content' => 'With our romantic elegant settings, we aim to make your wedding/event an unforgettable and truly memorable one. With our focus on fine details and extensive paraphernalia backed by extensive experience, our unrivaled service will ensure that you get hitched without a hitch.',
+                    'service1_image' => '/assets/img/services/service_list1.jpg',
+                    'service2_title' => 'Luxury suites',
+                    'service2_content' => 'Nearly double the size of your average hotel room, our two luxurious suites have everything you need and more. Divine, elegant, perfectly designed and offer the epitome of decadence, indulgence, and luxury.',
+                    'service2_image' => '/assets/img/services/service-2.png',
+                ]),
+                'position' => 2,
+                'is_active' => true,
+            ]
+        );
+
+        // Memorybook page services section (The experience / Explore Services content)
+        $memorybook->sections()->updateOrCreate(
+            ['section_key' => 'services'],
+            [
+                'heading' => 'The experience',
+                'content' => 'Explore Services',
+                'meta' => json_encode(['description' => 'Professional Wedding & Event Planner surabit aliquet orci elit gene tristisue in lorem dream vitae alisuam tincidunt felis sed gravida aliquam nemue libero hendrerit magna sit amenta the mollis lacus huam maurisine alisuam erat volutfat.']),
+                'position' => 2,
+                'is_active' => true,
+            ]
+        );
+
+        // Memorybook page hero section (services content)
+        $memorybook->sections()->updateOrCreate(
             ['section_key' => 'hero'],
             [
                 'heading' => 'Our Services',
@@ -111,14 +158,14 @@ class CmsSeeder extends Seeder
                 'is_active' => true,
             ]
         );
-
-        // Gallery page hero section
-        $gallery->sections()->updateOrCreate(
-            ['section_key' => 'hero'],
+        // Memorybook page gallery section (editable in admin)
+        $memorybook->sections()->updateOrCreate(
+            ['section_key' => 'memorybook'],
             [
-                'heading' => 'Memorybook & Gallery',
-                'content' => 'Captured moments from our events',
-                'position' => 1,
+                'heading' => 'Gallery',
+                'content' => 'See our memories from past events',
+                'meta' => json_encode(['description' => 'A curated collection of visual memories from events and experiences.']),
+                'position' => 2,
                 'is_active' => true,
             ]
         );
@@ -131,6 +178,28 @@ class CmsSeeder extends Seeder
         ] as $idx => $section) {
             $contact->sections()->updateOrCreate(['section_key' => $section['section_key']], $section + ['position' => $idx + 1, 'is_active' => true]);
         }
+
+        // Terms & Conditions page section
+        $terms->sections()->updateOrCreate(
+            ['section_key' => 'terms_content'],
+            [
+                'heading' => 'Terms & Conditions',
+                'content' => '<p>Please configure terms and conditions here from the admin panel.</p>',
+                'position' => 1,
+                'is_active' => true,
+            ]
+        );
+
+        // Terms of Services page section
+        $termsOfService->sections()->updateOrCreate(
+            ['section_key' => 'terms_content'],
+            [
+                'heading' => 'Terms of Services',
+                'content' => '<p>Please configure terms of services here from the admin panel.</p>',
+                'position' => 1,
+                'is_active' => true,
+            ]
+        );
 
         // Create default services for the carousel
         $serviceData = [

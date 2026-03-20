@@ -21,4 +21,30 @@ class Page extends Model
     {
         return $this->hasMany(PageSection::class)->orderBy('position');
     }
+
+    public function getAdminTitleAttribute(): string
+    {
+        if ($this->slug === 'services') {
+            return 'Memorybook';
+        }
+
+        if ($this->slug === 'memorybook' || $this->slug === 'gallery') {
+            return 'Services';
+        }
+
+        return $this->title;
+    }
+
+    public function getAdminSlugAttribute(): string
+    {
+        if ($this->slug === 'services') {
+            return 'memorybook';
+        }
+
+        if (in_array($this->slug, ['memorybook', 'gallery'])) {
+            return 'services';
+        }
+
+        return $this->slug;
+    }
 }

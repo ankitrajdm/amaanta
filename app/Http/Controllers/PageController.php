@@ -10,6 +10,7 @@ use App\Models\Menu;
 use App\Models\Page;
 use App\Models\Post;
 use App\Models\Service;
+use App\Models\PageSection;
 use App\Models\Tag;
 use App\Models\Testimonial;
 use App\Models\WebsiteSetting;
@@ -46,9 +47,50 @@ class PageController extends Controller
 
     public function services(): View
     {
+        $servicesPage = Page::with('sections')->where('slug', 'services')->first();
+
+        // Support both old and new key names for shared services section
+        $sharedServicesSection = PageSection::where('section_key', 'services_section')->first();
+        if (!$sharedServicesSection) {
+            $sharedServicesSection = PageSection::where('section_key', 'services')->first();
+        }
+
         return view('pages.services', [
-            'page' => Page::with('sections')->where('slug', 'services')->first(),
+            'page' => $servicesPage,
+            'sharedServicesSection' => $sharedServicesSection,
             'services' => Service::where('is_active', true)->paginate(12),
+            'settings' => $this->settings(),
+        ]);
+    }
+
+    public function memorybook(): View
+    {
+        $page = Page::with('sections')->where('slug', 'memorybook')->first();
+        $sections = $page ? $page->sections->keyBy('section_key') : collect();
+
+        $servicesPage = Page::with('sections')->where('slug', 'services')->first();
+        $servicesSection = $servicesPage ? $servicesPage->sections->where('section_key', 'services')->first() : null;
+
+        return view('pages.memorybook', [
+            'page' => $page,
+            'sections' => $sections,
+            'servicesSection' => $servicesSection,
+            'services' => Service::where('is_active', true)->paginate(12),
+            'galleryImagesByTitle' => GalleryImage::where('is_active', true)
+                ->whereNotNull('title')
+                ->where('title', '!=', '')
+                ->select('title')
+                ->distinct()
+                ->get()
+                ->map(function($item) {
+                    $images = GalleryImage::where('title', $item->title)
+                        ->where('is_active', true)
+                        ->get();
+                    return [
+                        'title' => $item->title,
+                        'images' => $images
+                    ];
+                }),
             'settings' => $this->settings(),
         ]);
     }
@@ -164,6 +206,30 @@ class PageController extends Controller
             'settings' => $this->settings(),
             'headerMenu' => Menu::where('location', 'header')->with('items')->first(),
             'faqs' => FAQ::where('is_active', true)->get(),
+        ]);
+    }
+
+    public function terms(): View
+    {
+        $page = Page::with('sections')->where('slug', 'terms-and-conditions')->firstOrFail();
+        $sections = $page->sections->keyBy('section_key');
+
+        return view('pages.static', [
+            'page' => $page,
+            'sections' => $sections,
+            'settings' => $this->settings(),
+        ]);
+    }
+
+    public function termsOfServices(): View
+    {
+        $page = Page::with('sections')->where('slug', 'terms-of-services')->firstOrFail();
+        $sections = $page->sections->keyBy('section_key');
+
+        return view('pages.static', [
+            'page' => $page,
+            'sections' => $sections,
+            'settings' => $this->settings(),
         ]);
     }
 

@@ -87,8 +87,8 @@
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item"><a class="nav-link active" href="<?php echo e(route('home')); ?>">Home</a></li>
                     <li class="nav-item"><a class="nav-link" href="<?php echo e(route('about')); ?>">About</a></li>
-                    <li class="nav-item"><a class="nav-link" href="<?php echo e(route('services')); ?>">Services</a></li>
-                    <li class="nav-item"><a class="nav-link" href="<?php echo e(route('gallery')); ?>">Memorybook</a></li>
+                    <li class="nav-item"><a class="nav-link" href="<?php echo e(route('services')); ?>">Memorybook</a></li>
+                    <li class="nav-item"><a class="nav-link" href="<?php echo e(route('memorybook')); ?>">Services</a></li>
                     <li class="nav-item"><a class="nav-link" href="<?php echo e(route('contact')); ?>">Contact</a></li>
                 </ul>
             </div>
@@ -171,11 +171,11 @@
                         <div class="item">
                             <div class="position-re o-hidden"> <img src="<?php echo e($service->image ?? '/assets/img/services/default.jpg'); ?>" alt=""> </div>
                             <div class="con">
-                                <h5><a href="<?php echo e(route('service.detail', $service->slug)); ?>"><?php echo e($service->title); ?> <span><?php echo e($service->slug); ?></span></a> </h5>
+                                <h5><a href="<?php echo e(route('services.detail', $service->slug)); ?>"><?php echo e($service->title); ?> <span><?php echo e($service->slug); ?></span></a> </h5>
                                 <div class="line"></div>
                                 <div class="row facilities">
                                     <div class="col-md-12 text-right">
-                                        <div class="permalink"><a href="<?php echo e(route('service.detail', $service->slug)); ?>">Explore <i class="ti-arrow-right"></i></a></div>
+                                        <div class="permalink"><a href="<?php echo e(route('services.detail', $service->slug)); ?>">Explore <i class="ti-arrow-right"></i></a></div>
                                     </div>
                                 </div>
                             </div>
@@ -268,50 +268,6 @@
             </div>
         </div>
     </section>
-    <!-- Portfolio -->
-    <section class="portfolio section-padding">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-12 mb-30">
-                    <div class="section-subtitle">Events</div>
-                    <div class="section-title">Our <span>Memorybook</span></div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-12">
-                <div class="owl-carousel owl-theme">
-                    <?php $__currentLoopData = $gallery; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $image): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                    <div class="square-flip">
-                        <div class="square bg-img" data-background="<?php echo e(strpos($image->image_path, 'http') === 0 || strpos($image->image_path, '/') === 0 ? $image->image_path : '/storage/' . $image->image_path); ?>">
-                            <div class="square-container d-flex align-items-end justify-content-end">
-                                <div class="box-title">
-                                    <h4><?php echo e(strtoupper(substr($image->title,0,1))); ?></h4>
-                                    <h6><?php echo e($image->event_name); ?></h6>
-                                </div>
-                            </div>
-                            <div class="flip-overlay"></div>
-                        </div>
-                        <div class="square2 bg-green">
-                            <div class="square-container2">
-                                <h4><?php echo e($image->event_name); ?></h4>
-                                <p><?php echo e($image->title); ?></p>
-                                <div class="row portfolio-list mb-30">
-                                    <div class="col-md-12">
-                                        <ul>
-                                            <li><?php echo e($image->title); ?></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                                <div class="btn-line"><a href="#">Find out more</a></div>
-                            </div>
-                        </div>
-                    </div>
-                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                </div>
-                </div>
-            </div>
-        </div>
-    </section>
     <!-- Blog -->
     <section class="blog section-padding bg-green">
         <div class="container">
@@ -400,7 +356,7 @@
                         <ul class="footer-explore-list list-unstyled">
                             <li><a href="<?php echo e(route('about')); ?>">About</a></li>
                             <li><a href="<?php echo e(route('services')); ?>">Services</a></li>
-                            <li><a href="<?php echo e(route('gallery')); ?>">Gallery</a></li>
+                            <li><a href="<?php echo e(route('memorybook')); ?>">Memorybook</a></li>
                             <li><a href="<?php echo e(route('blog')); ?>">Blog</a></li>
                             <li><a href="<?php echo e(route('contact')); ?>">Contact</a></li>
                         </ul>

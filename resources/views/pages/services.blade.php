@@ -2,6 +2,7 @@
     $servicesPage = \App\Models\Page::where('slug', 'services')->with('sections')->first();
     $sections = $servicesPage ? $servicesPage->sections->keyBy('section_key') : collect();
     $settings = \App\Models\WebsiteSetting::pluck('value', 'key')->toArray();
+    $sharedServicesSection = $sharedServicesSection ?? ($sections['services_section'] ?? null);
 @endphp
 <!DOCTYPE html>
 <html lang="zxx">
@@ -90,7 +91,7 @@
                     <li class="nav-item"><a class="nav-link" href="{{ route('home') }}">Home</a></li>
                     <li class="nav-item"><a class="nav-link" href="{{ route('about') }}">About</a></li>
                     <li class="nav-item"><a class="nav-link active" href="{{ route('services') }}">Services</a></li>
-                    <li class="nav-item"><a class="nav-link" href="{{ route('gallery') }}">Memorybook</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{ route('memorybook') }}">Memorybook</a></li>
                     <li class="nav-item"><a class="nav-link" href="{{ route('contact') }}">Contact</a></li>
                 </ul>
             </div>
@@ -105,8 +106,8 @@
                     <div class="slider-text-inner">
                         <div class="desc text-start">
                             <h4>{{ $sections['hero']->meta['subtitle'] ?? 'Amaanta' }}</h4>
-                            <h1>{{ $sections['hero']->heading ?? 'Our Services' }}</h1>
-                            <p>{!! $sections['hero']->content ?? 'Explore our comprehensive range of professional services for unforgettable celebrations.' !!}</p>
+                            <h1>{{ $sections['hero']->heading ?? 'Our Memorybook' }}</h1>
+                            <p>{!! $sections['hero']->content ?? 'Relive our beautiful event moments and cherished memories.' !!}</p>
                         </div>
                     </div>
                 </div>
@@ -117,44 +118,51 @@
         </div>
     </div>
 
-     <!-- Services -->
-    <section class="services section-padding">
+    <!-- Our Services (shared with About page) -->
+    @if($sharedServicesSection)
+    <section class="team section-padding">
         <div class="container">
             <div class="row">
-                <div class="col-md-5 mb-30">
-                    <div class="section-subtitle">{!! $sections['services']->heading ?? 'The experience' !!}</div>
-                    <div class="section-title">{!! $sections['services']->content ?? 'Explore <span>Services</span>' !!}</div>
-                </div>
-                <div class="col-md-7 mb-30">
-                    @if(isset($sections['services']->meta['description']))
-                        <p>{!! $sections['services']->meta['description'] !!}</p>
-                    @else
-                        <p>Professional Wedding & Event Planner surabit aliquet orci elit gene tristisue in lorem dream vitae alisuam tincidunt felis sed gravida aliquam nemue libero hendrerit magna sit amenta the mollis lacus huam maurisine alisuam erat volutfat.</p>
-                    @endif
+                <div class="col-md-12 mb-30">
+                    <div class="section-subtitle">{{ $sharedServicesSection->meta['subtitle'] ?? 'Our Services' }}</div>
+                    <div class="section-title">{{ $sharedServicesSection->heading ?? 'Amaanta' }} <span>{{ $sharedServicesSection->meta['highlight'] ?? 'Services' }}</span></div>
                 </div>
             </div>
             <div class="row">
-                <div class="col-md-12">
-                    <div class="owl-carousel owl-theme">
-                        @foreach($services as $service)
-                        <div class="item">
-                            <div class="position-re o-hidden"> <img src="{{ $service->image ?? '/assets/img/services/default.jpg' }}" alt=""> </div>
-                            <div class="con">
-                                <h5><a href="{{ route('service.detail', $service->slug) }}">{{ $service->title }} <span>{{ $service->slug }}</span></a> </h5>
-                                <div class="line"></div>
-                                <div class="row facilities">
-                                    <div class="col-md-12 text-right">
-                                        <div class="permalink"><a href="{{ route('service.detail', $service->slug) }}">Explore <i class="ti-arrow-right"></i></a></div>
-                                    </div>
-                                </div>
-                            </div>
+                <div class="col-md-6 animate-box" data-animate-effect="fadeInLeft">
+                    <div class="img left">
+                        <img src="{{ asset($sharedServicesSection->meta['service1_image'] ?? 'assets/img/services/service_list1.jpg') }}" alt="">
+                    </div>
+                </div>
+                <div class="col-md-6 valign animate-box" data-animate-effect="fadeInRight">
+                    <div class="content">
+                        <div class="cont text-left">
+                            <h4><span>{{ $sharedServicesSection->meta['service1_title'] ?? 'Decoration' }}</span> | Events </h4>
+                            <p>{{ $sharedServicesSection->meta['service1_content'] ?? '' }}</p>
                         </div>
-                        @endforeach
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6 order2 valign animate-box" data-animate-effect="fadeInLeft">
+                    <div class="content">
+                        <div class="cont text-left">
+                            <h4 class="white"><span>{{ $sharedServicesSection->meta['service2_title'] ?? 'Luxury suites' }}</span> | Events</h4>
+                            <p>{{ $sharedServicesSection->meta['service2_content'] ?? '' }}</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 order1 animate-box" data-animate-effect="fadeInRight">
+                    <div class="img">
+                        <img src="{{ asset($sharedServicesSection->meta['service2_image'] ?? 'assets/img/services/service-2.png') }}" alt="">
                     </div>
                 </div>
             </div>
         </div>
     </section>
+    @endif
+
+  
 
     
 <footer class="footer">
@@ -174,7 +182,7 @@
                             <li><a href="{{ route('home') }}">Home</a></li>
                             <li><a href="{{ route('about') }}">About</a></li>
                             <li><a href="{{ route('services') }}">Services</a></li>
-                            <li><a href="{{ route('gallery') }}">Gallery</a></li>
+                            <li><a href="{{ route('memorybook') }}">Memorybook</a></li>
                             <li><a href="{{ route('blog') }}">Blog</a></li>
                             <li><a href="{{ route('contact') }}">Contact</a></li>
                         </ul>

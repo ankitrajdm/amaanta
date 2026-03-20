@@ -29,8 +29,8 @@
             <tbody>
                 @forelse($pages as $page)
                     <tr>
-                        <td><strong>{{ $page->title }}</strong></td>
-                        <td><code>{{ $page->slug }}</code></td>
+                        <td><strong>{{ $page->admin_title }}</strong></td>
+                        <td><code>{{ $page->admin_slug }}</code></td>
                         <td><span class="badge bg-info">{{ $page->sections_count }}</span></td>
                         <td>
                             @if($page->is_active)
