@@ -381,7 +381,7 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="footer-bottom-inner">
-                        <p class="footer-bottom-copy-right">© Copyright <?php echo e(now()->year); ?> by <a href="/" target="_blank">Amaanta</a></p>
+                        <p class="footer-bottom-copy-right">Copyright © <?php echo e(now()->year); ?>  <a href="/" target="_blank">Amaanta</a></p>
                     </div>
                 </div>
             </div>

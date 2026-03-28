@@ -158,9 +158,23 @@
                 <form method="POST" class="contact__form" action="{{ route('contact.store') }}">
                     @csrf
                     <div class="row">
+                        <div class="col-12">
+                            <div class="contact__msg" style="display: none;"></div>
+                        </div>
                         @if(session('status'))
                         <div class="col-12">
                             <div class="alert alert-success contact__msg">{{ session('status') }}</div>
+                        </div>
+                        @endif
+                        @if($errors->any())
+                        <div class="col-12">
+                            <div class="alert alert-danger">
+                                <ul class="mb-0">
+                                    @foreach($errors->all() as $error)
+                                        <li>{{ $error }}</li>
+                                    @endforeach
+                                </ul>
+                            </div>
                         </div>
                         @endif
                     </div>
@@ -175,9 +189,38 @@
                             <input name="phone" type="text" placeholder="Your Number *" required value="{{ old('phone') }}">
                         </div>
                         <div class="col-md-6 form-group">
-                            <input name="subject" type="text" placeholder="Subject *" required value="{{ old('subject') }}">
+                            <select name="event_type" required>
+                                <option value="">Select Event Type *</option>
+                                <option value="Wedding" {{ old('event_type') == 'Wedding' ? 'selected' : '' }}>Wedding</option>
+                                <option value="Birthday" {{ old('event_type') == 'Birthday' ? 'selected' : '' }}>Birthday</option>
+                                <option value="Corporate" {{ old('event_type') == 'Corporate' ? 'selected' : '' }}>Corporate</option>
+                                <option value="Others" {{ old('event_type') == 'Others' ? 'selected' : '' }}>Others</option>
+                            </select>
                         </div>
-                        <!-- optional additional fields can be added via sections meta -->
+                        <div class="col-md-6 form-group">
+                            <input name="event_date" type="date" placeholder="Event Date (dd-mm-yyyy) *" required value="{{ old('event_date') }}">
+                        </div>
+                        <div class="col-md-6 form-group">
+                            <input name="guests" type="number" placeholder="Number of Guests *" required value="{{ old('guests') }}" min="1">
+                        </div>
+                        <div class="col-md-12 form-group">
+                            <label class="custom-label">Services Required *</label><br>
+                            <label class="service-option">
+                                <input type="checkbox" name="services[]" value="Lawn" {{ in_array('Lawn', old('services', [])) ? 'checked' : '' }}> Lawn
+                            </label>
+                            <label class="service-option">
+                                <input type="checkbox" name="services[]" value="Decoration" {{ in_array('Decoration', old('services', [])) ? 'checked' : '' }}> Decoration
+                            </label>
+                            <label class="service-option">
+                                <input type="checkbox" name="services[]" value="Catering" {{ in_array('Catering', old('services', [])) ? 'checked' : '' }}> Catering
+                            </label>
+                            <label class="service-option">
+                                <input type="checkbox" name="services[]" value="DJ" {{ in_array('DJ', old('services', [])) ? 'checked' : '' }}> DJ
+                            </label>
+                        </div>
+                        <div class="col-md-12 form-group">
+                            <input name="budget" type="text" placeholder="Your Budget *" required value="{{ old('budget') }}">
+                        </div>
                         <div class="col-md-12 form-group">
                             <textarea name="message" cols="30" rows="4" placeholder="Additional Information*" required>{{ old('message') }}</textarea>
                         </div>
@@ -268,7 +311,7 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="footer-bottom-inner">
-                        <p class="footer-bottom-copy-right">© Copyright {{ now()->year }} by <a href="/" target="_blank">Amaanta</a></p>
+                        <p class="footer-bottom-copy-right">Copyright © {{ now()->year }} <a href="/" target="_blank">Amaanta</a></p>
                     </div>
                 </div>
             </div>

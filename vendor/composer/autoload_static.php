@@ -19,6 +19,7 @@ class ComposerStaticInit8e184be4eb612779862ecceae904cfae
         '662a729f963d39afe703c9d9b7ab4a8c' => __DIR__ . '/..' . '/symfony/polyfill-php83/bootstrap.php',
         '606a39d89246991a373564698c2d8383' => __DIR__ . '/..' . '/symfony/polyfill-php85/bootstrap.php',
         '7b11c4dc42b3b3023073cb14e519683c' => __DIR__ . '/..' . '/ralouphie/getallheaders/src/getallheaders.php',
+        '2cffec82183ee1cea088009cef9a6fc3' => __DIR__ . '/..' . '/ezyang/htmlpurifier/library/HTMLPurifier.composer.php',
         '2203a247e6fda86070a5e4e07aed533a' => __DIR__ . '/..' . '/symfony/clock/Resources/now.php',
         '09f6b20656683369174dd6fa83b7e5fb' => __DIR__ . '/..' . '/symfony/polyfill-uuid/bootstrap.php',
         'a1105708a18b76903365ca1c4aa61b02' => __DIR__ . '/..' . '/symfony/translation/Resources/functions.php',
@@ -40,6 +41,10 @@ class ComposerStaticInit8e184be4eb612779862ecceae904cfae
         'v' => 
         array (
             'voku\\' => 5,
+        ),
+        'Z' => 
+        array (
+            'ZipStream\\' => 10,
         ),
         'T' => 
         array (
@@ -92,6 +97,7 @@ class ComposerStaticInit8e184be4eb612779862ecceae904cfae
             'Psr\\Container\\' => 14,
             'Psr\\Clock\\' => 10,
             'PhpOption\\' => 10,
+            'PhpOffice\\PhpSpreadsheet\\' => 25,
         ),
         'N' => 
         array (
@@ -100,6 +106,8 @@ class ComposerStaticInit8e184be4eb612779862ecceae904cfae
         'M' => 
         array (
             'Monolog\\' => 8,
+            'Matrix\\' => 7,
+            'Maatwebsite\\Excel\\' => 18,
         ),
         'L' => 
         array (
@@ -144,6 +152,9 @@ class ComposerStaticInit8e184be4eb612779862ecceae904cfae
         'C' => 
         array (
             'Cron\\' => 5,
+            'Composer\\Semver\\' => 16,
+            'Composer\\Pcre\\' => 14,
+            'Complex\\' => 8,
             'Carbon\\Doctrine\\' => 16,
             'Carbon\\' => 7,
         ),
@@ -161,6 +172,10 @@ class ComposerStaticInit8e184be4eb612779862ecceae904cfae
         'voku\\' => 
         array (
             0 => __DIR__ . '/..' . '/voku/portable-ascii/src/voku',
+        ),
+        'ZipStream\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/maennchen/zipstream-php/src',
         ),
         'TijsVerkoyen\\CssToInlineStyles\\' => 
         array (
@@ -323,6 +338,10 @@ class ComposerStaticInit8e184be4eb612779862ecceae904cfae
         array (
             0 => __DIR__ . '/..' . '/phpoption/phpoption/src/PhpOption',
         ),
+        'PhpOffice\\PhpSpreadsheet\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/phpoffice/phpspreadsheet/src/PhpSpreadsheet',
+        ),
         'Nette\\' => 
         array (
             0 => __DIR__ . '/..' . '/nette/schema/src',
@@ -331,6 +350,14 @@ class ComposerStaticInit8e184be4eb612779862ecceae904cfae
         'Monolog\\' => 
         array (
             0 => __DIR__ . '/..' . '/monolog/monolog/src/Monolog',
+        ),
+        'Matrix\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/markbaker/matrix/classes/src',
+        ),
+        'Maatwebsite\\Excel\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/maatwebsite/excel/src',
         ),
         'League\\Uri\\' => 
         array (
@@ -427,6 +454,18 @@ class ComposerStaticInit8e184be4eb612779862ecceae904cfae
         array (
             0 => __DIR__ . '/..' . '/dragonmantank/cron-expression/src/Cron',
         ),
+        'Composer\\Semver\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/composer/semver/src',
+        ),
+        'Composer\\Pcre\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/composer/pcre/src',
+        ),
+        'Complex\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/markbaker/complex/classes/src',
+        ),
         'Carbon\\Doctrine\\' => 
         array (
             0 => __DIR__ . '/..' . '/carbonphp/carbon-doctrine-types/src/Carbon/Doctrine',
@@ -442,6 +481,16 @@ class ComposerStaticInit8e184be4eb612779862ecceae904cfae
         'App\\' => 
         array (
             0 => __DIR__ . '/../..' . '/app',
+        ),
+    );
+
+    public static $prefixesPsr0 = array (
+        'H' => 
+        array (
+            'HTMLPurifier' => 
+            array (
+                0 => __DIR__ . '/..' . '/ezyang/htmlpurifier/library',
+            ),
         ),
     );
 
@@ -534,6 +583,7 @@ class ComposerStaticInit8e184be4eb612779862ecceae904cfae
         return \Closure::bind(function () use ($loader) {
             $loader->prefixLengthsPsr4 = ComposerStaticInit8e184be4eb612779862ecceae904cfae::$prefixLengthsPsr4;
             $loader->prefixDirsPsr4 = ComposerStaticInit8e184be4eb612779862ecceae904cfae::$prefixDirsPsr4;
+            $loader->prefixesPsr0 = ComposerStaticInit8e184be4eb612779862ecceae904cfae::$prefixesPsr0;
             $loader->classMap = ComposerStaticInit8e184be4eb612779862ecceae904cfae::$classMap;
 
         }, null, ClassLoader::class);

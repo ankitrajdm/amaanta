@@ -9,5 +9,26 @@ class ContactForm extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'email', 'subject', 'message', 'status'];
+    protected $fillable = [
+        'name',
+        'email',
+        'phone',
+        'event_type',
+        'event_date',
+        'guests',
+        'services',
+        'budget',
+        'message',
+        'status',
+        'response_status',
+        'responded_at',
+        'admin_notes'
+    ];
+
+    protected $casts = [
+        'services' => 'array',
+        'event_date' => 'date',
+        'guests' => 'integer',
+        'responded_at' => 'datetime',
+    ];
 }

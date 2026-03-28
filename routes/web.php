@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\ContentController;
+use App\Http\Controllers\Admin\ContactFormController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\AuthController;
@@ -38,7 +39,11 @@ Route::get('/memorybook/{slug}', [PageController::class, 'serviceDetail'])->name
 Route::get('/terms-and-conditions', [App\Http\Controllers\PageController::class, 'terms'])->name('terms');
 Route::get('/terms-of-services', [App\Http\Controllers\PageController::class, 'termsOfServices'])->name('terms.of.services');
 Route::get('/contact', [App\Http\Controllers\PageController::class, 'contact'])->name('contact');
-Route::post('/contact/enquiry', [ContactController::class, 'store'])->name('contact.store');
+Route::post('/contact', [ContactController::class, 'store'])->name('contact.store');
+
+// Booking routes
+Route::get('/booking', [App\Http\Controllers\BookingController::class, 'create'])->name('booking');
+Route::post('/booking', [App\Http\Controllers\BookingController::class, 'store'])->name('booking.store');
 
 Route::middleware('guest')->group(function (): void {
     Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
@@ -46,6 +51,16 @@ Route::middleware('guest')->group(function (): void {
 });
 
 Route::post('/logout', [AuthController::class, 'logout'])->middleware('auth')->name('logout');
+
+// Contact Forms Management (requires auth but not specific role)
+Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function (): void {
+    Route::resource('contact-forms', App\Http\Controllers\Admin\ContactFormController::class);
+    Route::get('contact-forms-export', [App\Http\Controllers\Admin\ContactFormController::class, 'export'])->name('contact-forms.export');
+
+    // Bookings Management
+    Route::resource('bookings', App\Http\Controllers\Admin\BookingController::class);
+    Route::get('bookings-export', [App\Http\Controllers\Admin\BookingController::class, 'export'])->name('bookings.export');
+});
 
 Route::middleware(['auth', 'role:admin,editor'])->prefix('admin')->name('admin.')->group(function (): void {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
@@ -141,14 +156,6 @@ Route::middleware(['auth', 'role:admin,editor'])->prefix('admin')->name('admin.'
     Route::get('/testimonials/{testimonial}', [ContentController::class, 'editTestimonial'])->name('testimonials.edit');
     Route::put('/testimonials/{testimonial}', [ContentController::class, 'updateTestimonial'])->name('testimonials.update');
     Route::delete('/testimonials/{testimonial}', [ContentController::class, 'destroyTestimonial'])->name('testimonials.destroy');
-
-    // Contact Forms Management
-    Route::get('/contact-forms', [ContentController::class, 'contactForms'])->name('contact-forms.index');
-    Route::get('/contact-forms/create', [ContentController::class, 'createContactForm'])->name('contact-forms.create');
-    Route::post('/contact-forms', [ContentController::class, 'storeContactForm'])->name('contact-forms.store');
-    Route::get('/contact-forms/{form}', [ContentController::class, 'editContactForm'])->name('contact-forms.edit');
-    Route::put('/contact-forms/{form}', [ContentController::class, 'updateContactForm'])->name('contact-forms.update');
-    Route::delete('/contact-forms/{form}', [ContentController::class, 'destroyContactForm'])->name('contact-forms.destroy');
 
     // Contact Enquiries
     Route::get('/enquiries', [ContentController::class, 'enquiries'])->name('enquiries.index');

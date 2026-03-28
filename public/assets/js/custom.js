@@ -391,28 +391,43 @@ $(function () {
     // success function
     function done_func(response) {
         message.fadeIn().removeClass('alert-danger').addClass('alert-success');
-        message.text(response);
+        message.text(response.message || response);
         setTimeout(function () {
             message.fadeOut();
         }, 2000);
         form.find('input:not([type="submit"]), textarea').val('');
+        form.find('input[type="checkbox"]').prop('checked', false);
+        form.find('select').prop('selectedIndex', 0);
     }
     // fail function
     function fail_func(data) {
-        message.fadeIn().removeClass('alert-success').addClass('alert-success');
-        message.text(data.responseText);
+        message.fadeIn().removeClass('alert-success').addClass('alert-danger');
+        if (data.responseJSON && data.responseJSON.errors) {
+            // Handle validation errors
+            var errorMessages = [];
+            for (var field in data.responseJSON.errors) {
+                errorMessages.push(data.responseJSON.errors[field][0]);
+            }
+            message.html(errorMessages.join('<br>'));
+        } else {
+            message.text(data.responseText || 'An error occurred. Please try again.');
+        }
         setTimeout(function () {
             message.fadeOut();
-        }, 2000);
+        }, 5000);
     }
     form.submit(function (e) {
-        e.preventDefault();
-        form_data = $(this).serialize();
-        $.ajax({
-            type: 'POST',
-            url: form.attr('action'),
-            data: form_data
-        }).done(done_func).fail(fail_func);
+        // Temporarily disable AJAX to test regular form submission
+        // e.preventDefault();
+        // form_data = $(this).serialize();
+        // $.ajax({
+        //     type: 'POST',
+        //     url: form.attr('action'),
+        //     data: form_data,
+        //     headers: {
+        //         'X-Requested-With': 'XMLHttpRequest'
+        //     }
+        // }).done(done_func).fail(fail_func);
     });
 
 

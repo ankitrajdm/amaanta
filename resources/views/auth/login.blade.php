@@ -168,6 +168,13 @@
 
             <button type="submit" class="login-button">Sign In</button>
         </form>
+
+        <div class="text-center mt-6">
+            <p class="text-gray-600 text-sm mb-2">Want to book an event?</p>
+            <a href="{{ route('booking') }}" class="text-blue-600 hover:text-blue-800 font-medium">
+                Book Your Event →
+            </a>
+        </div>
     </div>
 </div>
 @endsection

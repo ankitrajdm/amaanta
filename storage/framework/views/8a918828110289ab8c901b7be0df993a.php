@@ -70,6 +70,9 @@
                     <a href="<?php echo e(route('admin.contact-forms.index')); ?>" class="<?php if(request()->routeIs('admin.contact-forms.*')): ?> active <?php endif; ?>">
                         <i class="fas fa-envelope"></i> Contact Forms
                     </a>
+                    <a href="<?php echo e(route('admin.bookings.index')); ?>" class="<?php if(request()->routeIs('admin.bookings.*')): ?> active <?php endif; ?>">
+                        <i class="fas fa-calendar-check"></i> Bookings
+                    </a>
                     <a href="<?php echo e(route('admin.enquiries.index')); ?>" class="<?php if(request()->routeIs('admin.enquiries.*')): ?> active <?php endif; ?>">
                         <i class="fas fa-inbox"></i> Enquiries
                     </a>

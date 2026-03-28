@@ -159,9 +159,23 @@
                 <form method="POST" class="contact__form" action="<?php echo e(route('contact.store')); ?>">
                     <?php echo csrf_field(); ?>
                     <div class="row">
+                        <div class="col-12">
+                            <div class="contact__msg" style="display: none;"></div>
+                        </div>
                         <?php if(session('status')): ?>
                         <div class="col-12">
                             <div class="alert alert-success contact__msg"><?php echo e(session('status')); ?></div>
+                        </div>
+                        <?php endif; ?>
+                        <?php if($errors->any()): ?>
+                        <div class="col-12">
+                            <div class="alert alert-danger">
+                                <ul class="mb-0">
+                                    <?php $__currentLoopData = $errors->all(); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $error): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                        <li><?php echo e($error); ?></li>
+                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                </ul>
+                            </div>
                         </div>
                         <?php endif; ?>
                     </div>
@@ -176,9 +190,38 @@
                             <input name="phone" type="text" placeholder="Your Number *" required value="<?php echo e(old('phone')); ?>">
                         </div>
                         <div class="col-md-6 form-group">
-                            <input name="subject" type="text" placeholder="Subject *" required value="<?php echo e(old('subject')); ?>">
+                            <select name="event_type" required>
+                                <option value="">Select Event Type *</option>
+                                <option value="Wedding" <?php echo e(old('event_type') == 'Wedding' ? 'selected' : ''); ?>>Wedding</option>
+                                <option value="Birthday" <?php echo e(old('event_type') == 'Birthday' ? 'selected' : ''); ?>>Birthday</option>
+                                <option value="Corporate" <?php echo e(old('event_type') == 'Corporate' ? 'selected' : ''); ?>>Corporate</option>
+                                <option value="Others" <?php echo e(old('event_type') == 'Others' ? 'selected' : ''); ?>>Others</option>
+                            </select>
                         </div>
-                        <!-- optional additional fields can be added via sections meta -->
+                        <div class="col-md-6 form-group">
+                            <input name="event_date" type="date" placeholder="Event Date (dd-mm-yyyy) *" required value="<?php echo e(old('event_date')); ?>">
+                        </div>
+                        <div class="col-md-6 form-group">
+                            <input name="guests" type="number" placeholder="Number of Guests *" required value="<?php echo e(old('guests')); ?>" min="1">
+                        </div>
+                        <div class="col-md-12 form-group">
+                            <label class="custom-label">Services Required *</label><br>
+                            <label class="service-option">
+                                <input type="checkbox" name="services[]" value="Lawn" <?php echo e(in_array('Lawn', old('services', [])) ? 'checked' : ''); ?>> Lawn
+                            </label>
+                            <label class="service-option">
+                                <input type="checkbox" name="services[]" value="Decoration" <?php echo e(in_array('Decoration', old('services', [])) ? 'checked' : ''); ?>> Decoration
+                            </label>
+                            <label class="service-option">
+                                <input type="checkbox" name="services[]" value="Catering" <?php echo e(in_array('Catering', old('services', [])) ? 'checked' : ''); ?>> Catering
+                            </label>
+                            <label class="service-option">
+                                <input type="checkbox" name="services[]" value="DJ" <?php echo e(in_array('DJ', old('services', [])) ? 'checked' : ''); ?>> DJ
+                            </label>
+                        </div>
+                        <div class="col-md-12 form-group">
+                            <input name="budget" type="text" placeholder="Your Budget *" required value="<?php echo e(old('budget')); ?>">
+                        </div>
                         <div class="col-md-12 form-group">
                             <textarea name="message" cols="30" rows="4" placeholder="Additional Information*" required><?php echo e(old('message')); ?></textarea>
                         </div>
@@ -269,7 +312,7 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="footer-bottom-inner">
-                        <p class="footer-bottom-copy-right">© Copyright <?php echo e(now()->year); ?> by <a href="/" target="_blank">Amaanta</a></p>
+                        <p class="footer-bottom-copy-right">Copyright © <?php echo e(now()->year); ?> <a href="/" target="_blank">Amaanta</a></p>
                     </div>
                 </div>
             </div>

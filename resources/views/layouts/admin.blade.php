@@ -117,8 +117,13 @@
                         </a>
                     </li>
                     <li>
-                        <a href="{{ route('admin.enquiries.index') }}" class="@if(Route::currentRouteName() === 'admin.enquiries.index') active @endif">
-                            <i class="fas fa-envelope"></i> Enquiries
+                        <a href="{{ route('admin.contact-forms.index') }}" class="@if(Route::currentRouteName() === 'admin.contact-forms.index' || Route::currentRouteName() === 'admin.contact-forms.show') active @endif">
+                            <i class="fas fa-envelope"></i> Contact Forms
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ route('admin.bookings.index') }}" class="@if(Route::currentRouteName() === 'admin.bookings.index' || Route::currentRouteName() === 'admin.bookings.show') active @endif">
+                            <i class="fas fa-calendar-check"></i> Bookings
                         </a>
                     </li>
                 </ul>

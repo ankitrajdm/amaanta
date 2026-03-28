@@ -388,11 +388,18 @@
                     <a href="<?php echo e(route('admin.testimonials.index')); ?>">Manage Testimonials</a>
                 </div>
 
-                <!-- Contact Enquiries -->
+                <!-- Contact Forms -->
                 <div class="module-card">
-                    <h3>💬 Enquiries</h3>
+                    <h3>💬 Contact Forms</h3>
                     <p>View contact form submissions.</p>
-                    <a href="<?php echo e(route('admin.enquiries.index')); ?>">View Enquiries</a>
+                    <a href="<?php echo e(route('admin.contact-forms.index')); ?>">View Contact Forms</a>
+                </div>
+
+                <!-- Bookings -->
+                <div class="module-card">
+                    <h3>📅 Bookings</h3>
+                    <p>Manage event bookings.</p>
+                    <a href="<?php echo e(route('admin.bookings.index')); ?>">View Bookings</a>
                 </div>
 
                 <!-- Menu Management -->

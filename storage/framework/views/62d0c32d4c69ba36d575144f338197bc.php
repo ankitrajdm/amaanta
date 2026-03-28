@@ -90,6 +90,7 @@
     <a href="<?php echo e(route('home')); ?>" style="font-weight: 700; font-size: 1.1rem;">Home</a>
     <a href="<?php echo e(route('about')); ?>">About</a>
     <a href="<?php echo e(route('contact')); ?>">Contact</a>
+    <a href="<?php echo e(route('booking')); ?>">Book Event</a>
     <?php if(auth()->guard()->check()): ?>
         <a href="<?php echo e(route('admin.dashboard')); ?>">Admin Panel</a>
         <form action="<?php echo e(route('logout')); ?>" method="POST" style="display:inline;"><?php echo csrf_field(); ?><button type="submit">Logout</button></form>

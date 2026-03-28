@@ -70,6 +70,9 @@
                     <a href="{{ route('admin.contact-forms.index') }}" class="@if(request()->routeIs('admin.contact-forms.*')) active @endif">
                         <i class="fas fa-envelope"></i> Contact Forms
                     </a>
+                    <a href="{{ route('admin.bookings.index') }}" class="@if(request()->routeIs('admin.bookings.*')) active @endif">
+                        <i class="fas fa-calendar-check"></i> Bookings
+                    </a>
                     <a href="{{ route('admin.enquiries.index') }}" class="@if(request()->routeIs('admin.enquiries.*')) active @endif">
                         <i class="fas fa-inbox"></i> Enquiries
                     </a>

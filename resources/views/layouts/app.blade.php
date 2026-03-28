@@ -90,6 +90,7 @@
     <a href="{{ route('home') }}" style="font-weight: 700; font-size: 1.1rem;">Home</a>
     <a href="{{ route('about') }}">About</a>
     <a href="{{ route('contact') }}">Contact</a>
+    <a href="{{ route('booking') }}">Book Event</a>
     @auth
         <a href="{{ route('admin.dashboard') }}">Admin Panel</a>
         <form action="{{ route('logout') }}" method="POST" style="display:inline;">@csrf<button type="submit">Logout</button></form>
