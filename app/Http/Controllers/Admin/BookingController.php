@@ -90,4 +90,40 @@ class BookingController extends Controller
 
         return Excel::download(new BookingsExport($query), 'bookings_' . now()->format('Y-m-d') . '.xlsx');
     }
+
+    public function calendarEvents(Request $request)
+    {
+        $startDate = $request->query('start');
+        $endDate = $request->query('end');
+
+        $bookings = Booking::whereBetween('event_date', [$startDate, $endDate])->get();
+
+        $events = $bookings->map(function ($booking) {
+            $statusColors = [
+                'pending' => '#FFC107',
+                'confirmed' => '#28A745',
+                'completed' => '#17A2B8',
+                'cancelled' => '#DC3545',
+            ];
+
+            return [
+                'id' => $booking->id,
+                'title' => $booking->customer_name . ' - ' . $booking->status,
+                'start' => $booking->event_date->toIso8601String(),
+                'end' => $booking->event_date->toIso8601String(),
+                'backgroundColor' => $statusColors[$booking->status] ?? '#6C757D',
+                'borderColor' => $statusColors[$booking->status] ?? '#6C757D',
+                'extendedProps' => [
+                    'customer_name' => $booking->customer_name,
+                    'phone' => $booking->phone,
+                    'total_cost' => $booking->total_cost,
+                    'status' => $booking->status,
+                    'booking_id' => $booking->id,
+                ],
+            ];
+        });
+
+        return response()->json($events);
+    }
 }
+

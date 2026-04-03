@@ -6,6 +6,10 @@
     <title><?php echo $__env->yieldContent('title', 'Admin Dashboard'); ?> - Amaanta CMS</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <!-- FullCalendar CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.10/index.global.min.css" rel="stylesheet">
+    <!-- Tippy Tooltip CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/tippy.js@6/themes/light.css">
     <style>
         body { background-color: #f5f5f5; }
         .sidebar { background-color: #2c3e50; color: white; min-height: 100vh; padding: 20px 0; }
@@ -148,6 +152,8 @@
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- FullCalendar JS -->
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.10/index.global.min.js"></script>
     <!-- WYSIWYG editor for HTML fields (CKEditor 5 classic) -->
     <script src="https://cdn.ckeditor.com/ckeditor5/39.0.1/classic/ckeditor.js"></script>
     <script>

@@ -60,6 +60,7 @@ Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function ():
     // Bookings Management
     Route::resource('bookings', App\Http\Controllers\Admin\BookingController::class);
     Route::get('bookings-export', [App\Http\Controllers\Admin\BookingController::class, 'export'])->name('bookings.export');
+    Route::get('bookings-calendar-events', [App\Http\Controllers\Admin\BookingController::class, 'calendarEvents'])->name('bookings.calendar-events');
 });
 
 Route::middleware(['auth', 'role:admin,editor'])->prefix('admin')->name('admin.')->group(function (): void {

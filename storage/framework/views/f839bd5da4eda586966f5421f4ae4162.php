@@ -220,6 +220,189 @@
             font-size: 0.85rem;
         }
     }
+
+    /* Calendar Styles */
+    .calendar-container {
+        background: white;
+        border-radius: 8px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        padding: 1.5rem;
+        margin-bottom: 2rem;
+    }
+
+    .calendar-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 1.5rem;
+    }
+
+    .calendar-header h2 {
+        margin: 0;
+        color: #333;
+        font-size: 1.3rem;
+        font-weight: 600;
+    }
+
+    .calendar-controls {
+        display: flex;
+        gap: 0.5rem;
+        align-items: center;
+    }
+
+    .calendar-controls button {
+        background: #3498db;
+        color: white;
+        border: none;
+        padding: 0.5rem 1rem;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 0.9rem;
+        font-weight: 500;
+        transition: all 0.3s ease;
+    }
+
+    .calendar-controls button:hover {
+        background: #2980b9;
+        transform: translateY(-2px);
+    }
+
+    .calendar-controls button.active {
+        background: #667eea;
+    }
+
+    .calendar-wrapper {
+        position: relative;
+    }
+
+    .fc {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    .fc-button-primary {
+        background-color: #3498db !important;
+        border-color: #3498db !important;
+    }
+
+    .fc-button-primary:not(:disabled):hover {
+        background-color: #2980b9 !important;
+        border-color: #2980b9 !important;
+    }
+
+    .fc-button-primary.fc-button-active {
+        background-color: #667eea !important;
+        border-color: #667eea !important;
+    }
+
+    .fc .fc-button-group > button {
+        border: 1px solid #3498db;
+    }
+
+    .fc .fc-dayGridMonth-view .fc-daygrid-day,
+    .fc .fc-daygrid-day {
+        background-color: #fff;
+        border: 1px solid #e0e0e0;
+    }
+
+    .fc .fc-daygrid-day.fc-day-other {
+        background-color: #f9f9f9;
+    }
+
+    .fc .fc-daygrid-day:hover {
+        background-color: #f5f5f5;
+    }
+
+    .fc .fc-daygrid-day-number {
+        padding: 6px 4px;
+        font-weight: 600;
+        color: #333;
+    }
+
+    .fc .fc-event {
+        border-radius: 4px;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        border: none !important;
+        padding: 2px 4px;
+    }
+
+    .fc .fc-event:hover {
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    }
+
+    .fc .fc-event-title {
+        font-size: 0.8rem;
+        font-weight: 600;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    .fc .fc-col-header-cell {
+        background-color: #f5f5f5;
+        border-color: #e0e0e0;
+        font-weight: 700;
+        padding: 10px 0;
+        color: #333;
+    }
+
+    .fc .fc-daygrid-body {
+        border-color: #e0e0e0;
+    }
+
+    /* Booking Event Colors */
+    .fc-event-primary {
+        background-color: #FFC107 !important;
+        border-color: #FFC107 !important;
+    }
+
+    .fc-event-success {
+        background-color: #28A745 !important;
+        border-color: #28A745 !important;
+    }
+
+    .fc-event-info {
+        background-color: #17A2B8 !important;
+        border-color: #17A2B8 !important;
+    }
+
+    .fc-event-danger {
+        background-color: #DC3545 !important;
+        border-color: #DC3545 !important;
+    }
+
+    .event-tooltip {
+        background: white;
+        padding: 12px;
+        border-radius: 6px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        z-index: 1000;
+    }
+
+    .event-tooltip p {
+        margin: 4px 0;
+        font-size: 0.85rem;
+    }
+
+    .event-tooltip .name {
+        font-weight: 600;
+        color: #333;
+    }
+
+    .event-tooltip .status {
+        padding: 2px 8px;
+        border-radius: 3px;
+        font-size: 0.75rem;
+        font-weight: 600;
+        display: inline-block;
+        margin-top: 4px;
+    }
+
+    .event-tooltip .status.pending { background-color: #FFC107; color: #000; }
+    .event-tooltip .status.confirmed { background-color: #28A745; color: white; }
+    .event-tooltip .status.completed { background-color: #17A2B8; color: white; }
+    .event-tooltip .status.cancelled { background-color: #DC3545; color: white; }
+
 </style>
 
 <section class="section-padding">
@@ -227,6 +410,30 @@
         <div class="dashboard-header">
             <h1>Admin Dashboard</h1>
             <p>Manage your website content and settings from here</p>
+        </div>
+
+        <!-- Bookings Calendar -->
+        <div class="calendar-container">
+            <div class="calendar-header">
+                <h2><i class="fas fa-calendar"></i> Bookings Calendar</h2>
+                <div class="calendar-controls">
+                    <button onclick="changeCalendarView('dayGridDay')" class="view-btn" data-view="dayGridDay" title="Daily View">
+                        <i class="fas fa-sun"></i> Day
+                    </button>
+                    <button onclick="changeCalendarView('timeGridWeek')" class="view-btn" data-view="timeGridWeek" title="Weekly View">
+                        <i class="fas fa-calendar-week"></i> Week
+                    </button>
+                    <button onclick="changeCalendarView('dayGridMonth')" class="view-btn active" data-view="dayGridMonth" title="Monthly View">
+                        <i class="fas fa-calendar-alt"></i> Month
+                    </button>
+                    <button onclick="changeCalendarView('listMonth')" class="view-btn" data-view="listMonth" title="Yearly/List View">
+                        <i class="fas fa-list"></i> List
+                    </button>
+                </div>
+            </div>
+            <div class="calendar-wrapper">
+                <div id="bookingsCalendar"></div>
+            </div>
         </div>
 
         <!-- Statistics Cards -->
@@ -254,6 +461,10 @@
     <div class="stat-card enquiries">
         <div class="stat-number"><?php echo e($stats['enquiries']); ?></div>
         <div class="stat-label">Enquiries</div>
+    </div>
+    <div class="stat-card" style="border-left-color: #FF6B6B;">
+        <div class="stat-number"><?php echo e($stats['bookings']); ?></div>
+        <div class="stat-label">Bookings</div>
     </div>
         </div>
 
@@ -422,6 +633,81 @@
     </div>
 </section>
 
+<?php $__env->stopSection(); ?>
+
+<?php $__env->startSection('scripts'); ?>
+<script>
+    let calendarInstance = null;
+
+    document.addEventListener('DOMContentLoaded', function () {
+        const calendarEl = document.getElementById('bookingsCalendar');
+        
+        calendarInstance = new FullCalendar.Calendar(calendarEl, {
+            initialView: 'dayGridMonth',
+            headerToolbar: {
+                left: 'prev,next today',
+                center: 'title',
+                right: ''
+            },
+            events: {
+                url: '<?php echo e(route("admin.bookings.calendar-events")); ?>',
+                failure: function() {
+                    alert('Error fetching bookings');
+                }
+            },
+            eventDidMount: function(info) {
+                // Create custom tooltip
+                const event = info.event;
+                const extProps = event.extendedProps;
+                
+                tippy(info.el, {
+                    content: `
+                        <div class="event-tooltip">
+                            <p class="name">${extProps.customer_name}</p>
+                            <p><strong>Phone:</strong> ${extProps.phone}</p>
+                            <p><strong>Cost:</strong> ₹${parseFloat(extProps.total_cost).toLocaleString('en-IN')}</p>
+                            <span class="status ${extProps.status}">${extProps.status.toUpperCase()}</span>
+                        </div>
+                    `,
+                    theme: 'light',
+                    interactive: true,
+                    allowHTML: true,
+                    placement: 'top',
+                    delay: [300, 0]
+                });
+            },
+            eventClick: function(info) {
+                const bookingId = info.event.extendedProps.booking_id;
+                window.location.href = '<?php echo e(route("admin.bookings.show", "")); ?>/' + bookingId;
+            },
+            height: 'auto',
+            contentHeight: 'auto',
+            datesSet: function() {
+                calendarInstance.refetchEvents();
+            },
+            businessHours: false,
+            expandRows: true
+        });
+        
+        calendarInstance.render();
+    });
+
+    function changeCalendarView(viewType) {
+        // Update active button
+        document.querySelectorAll('.view-btn').forEach(btn => {
+            btn.classList.remove('active');
+        });
+        event.target.closest('button').classList.add('active');
+        
+        // Change calendar view
+        if (calendarInstance) {
+            calendarInstance.changeView(viewType);
+        }
+    }
+</script>
+<!-- Include Tippy.js for tooltips -->
+<script src="https://unpkg.com/@popperjs/core@2"></script>
+<script src="https://unpkg.com/tippy.js@6"></script>
 <?php $__env->stopSection(); ?>
 
 <?php echo $__env->make('admin.layout', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?><?php /**PATH C:\xampp\htdocs\amaanta\resources\views/admin/dashboard.blade.php ENDPATH**/ ?>
