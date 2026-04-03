@@ -16,7 +16,7 @@
                         <h3 class="footer-title">Explore</h3>
                         <ul class="footer-explore-list list-unstyled">
                             <li><a href="{{ route('about') }}">About</a></li>
-                          
+                            <li><a href="{{ route('guest-feedback') }}">Guest Feedback</a></li>
                             <li><a href="{{ route('memorybook') }}">Memorybook</a></li>
                             <li><a href="{{ route('blog') }}">Blog</a></li>
                             <li><a href="{{ route('contact') }}">Contact</a></li>

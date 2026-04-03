@@ -80,6 +80,9 @@
                     <a href="{{ route('admin.enquiries.index') }}" class="@if(request()->routeIs('admin.enquiries.*')) active @endif">
                         <i class="fas fa-inbox"></i> Enquiries
                     </a>
+                    <a href="{{ route('admin.guest-feedbacks.index') }}" class="@if(request()->routeIs('admin.guest-feedbacks.*')) active @endif">
+                        <i class="fas fa-comments"></i> Guest Feedback
+                    </a>
                     
                     @if(auth()->user()->isAdmin())
                     <h6 class="mt-3 px-3" style="color: #bdc3c7;">Administration</h6>

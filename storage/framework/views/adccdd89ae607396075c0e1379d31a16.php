@@ -359,6 +359,7 @@
                             <li><a href="<?php echo e(route('memorybook')); ?>">Memorybook</a></li>
                             <li><a href="<?php echo e(route('blog')); ?>">Blog</a></li>
                             <li><a href="<?php echo e(route('contact')); ?>">Contact</a></li>
+                            <li><a href="<?php echo e(route('guest-feedback')); ?>">Guest Feedback</a></li>
                         </ul>
                     </div>
                 </div>

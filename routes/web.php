@@ -45,6 +45,10 @@ Route::post('/contact', [ContactController::class, 'store'])->name('contact.stor
 Route::get('/booking', [App\Http\Controllers\BookingController::class, 'create'])->name('booking');
 Route::post('/booking', [App\Http\Controllers\BookingController::class, 'store'])->name('booking.store');
 
+// Guest Feedback routes
+Route::get('/guest-feedback', [App\Http\Controllers\GuestFeedbackController::class, 'create'])->name('guest-feedback');
+Route::post('/guest-feedback', [App\Http\Controllers\GuestFeedbackController::class, 'store'])->name('guest-feedback.store');
+
 Route::middleware('guest')->group(function (): void {
     Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
     Route::post('/login', [AuthController::class, 'login'])->name('login.attempt');
@@ -61,6 +65,10 @@ Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function ():
     Route::resource('bookings', App\Http\Controllers\Admin\BookingController::class);
     Route::get('bookings-export', [App\Http\Controllers\Admin\BookingController::class, 'export'])->name('bookings.export');
     Route::get('bookings-calendar-events', [App\Http\Controllers\Admin\BookingController::class, 'calendarEvents'])->name('bookings.calendar-events');
+
+    // Guest Feedback Management
+    Route::resource('guest-feedbacks', App\Http\Controllers\Admin\GuestFeedbackController::class);
+    Route::get('guest-feedbacks-export', [App\Http\Controllers\Admin\GuestFeedbackController::class, 'export'])->name('guest-feedbacks.export');
 });
 
 Route::middleware(['auth', 'role:admin,editor'])->prefix('admin')->name('admin.')->group(function (): void {

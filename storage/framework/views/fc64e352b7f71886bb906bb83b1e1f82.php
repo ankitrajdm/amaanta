@@ -16,7 +16,7 @@
                         <h3 class="footer-title">Explore</h3>
                         <ul class="footer-explore-list list-unstyled">
                             <li><a href="<?php echo e(route('about')); ?>">About</a></li>
-                          
+                            <li><a href="<?php echo e(route('guest-feedback')); ?>">Guest Feedback</a></li>
                             <li><a href="<?php echo e(route('memorybook')); ?>">Memorybook</a></li>
                             <li><a href="<?php echo e(route('blog')); ?>">Blog</a></li>
                             <li><a href="<?php echo e(route('contact')); ?>">Contact</a></li>
@@ -44,7 +44,7 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="footer-bottom-inner">
-                        <p class="footer-bottom-copy-right">© Copyright <?php echo e(now()->year); ?> by <a href="/" target="_blank">Amaanta</a></p>
+                        <p class="footer-bottom-copy-right">Copyright © <?php echo e(now()->year); ?> <a href="/" target="_blank">Amaanta</a></p>
                     </div>
                 </div>
             </div>

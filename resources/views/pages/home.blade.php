@@ -357,6 +357,7 @@
                             <li><a href="{{ route('memorybook') }}">Memorybook</a></li>
                             <li><a href="{{ route('blog') }}">Blog</a></li>
                             <li><a href="{{ route('contact') }}">Contact</a></li>
+                            <li><a href="{{ route('guest-feedback') }}">Guest Feedback</a></li>
                         </ul>
                     </div>
                 </div>
