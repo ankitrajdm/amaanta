@@ -196,7 +196,7 @@
                             <p class="footer-contact-phone"><span class="ti-headphone-alt"></span> {{ $settings['contact_no'] ?? '+91-9971009669' }}</p>
                             <p class="footer-contact-mail">{{ $settings['contact_email'] ?? 'gm.amaanta@gmail.com' }}</p>
                         </div>
-                        <div class="footer-about-social-list"> <a href="#"><i class="ti-instagram"></i></a> <a href="#"><i class="ti-twitter"></i></a> <a href="#"><i class="ti-youtube"></i></a> <a href="https://www.facebook.com/amaantafarms/"><i class="ti-facebook"></i></a>  </div>
+                        <div class="footer-about-social-list"> <a href="#"><i class="ti-instagram"></i></a> <a href="#"><i class="fab fa-x"></i></a> <a href="#"><i class="ti-youtube"></i></a> <a href="https://www.facebook.com/amaantafarms/"><i class="ti-facebook"></i></a>  </div>
                     </div>
                 </div>
             </div>

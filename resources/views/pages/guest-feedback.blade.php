@@ -104,6 +104,7 @@
             font-family: 'Didact Gothic', sans-serif;
             position: relative;
             z-index: 1;
+            color: #fff;
         }
 
         .form-section {
@@ -133,9 +134,9 @@
             background: #7d6833;
             border-radius: 2px;
         }
-
+.section-title span{color: #7d6833;}
         .form-group {
-            margin-bottom: 1.5rem;
+            margin-bottom: .5rem;
         }
 
         .form-label {
@@ -213,7 +214,7 @@
             border: 2px solid #e5e7eb;
             border-radius: 12px;
             background: white;
-            margin-top: 0.5rem;
+            
         }
 
         .checkbox-group input[type="checkbox"] {

@@ -155,7 +155,7 @@
                                 <i class="fab fa-facebook-f"></i> Facebook
                             </a>
                             <a href="https://twitter.com/intent/tweet?url={{ url()->full() }}&text={{ urlencode($post->title) }}" target="_blank" style="background: #1DA1F2; color: white; text-decoration: none; padding: 8px 15px; margin-right: 10px; border-radius: 4px; display: inline-block;">
-                                <i class="fab fa-twitter"></i> Twitter
+                                <i class="fab fa-x"></i> X
                             </a>
                             <a href="https://www.linkedin.com/sharing/share-offsite/?url={{ url()->full() }}" target="_blank" style="background: #0077b5; color: white; text-decoration: none; padding: 8px 15px; border-radius: 4px; display: inline-block;">
                                 <i class="fab fa-linkedin-in"></i> LinkedIn
@@ -235,7 +235,7 @@
                             <p class="footer-contact-phone"><span class="ti-headphone-alt"></span> {{ $settings['contact_no'] ?? '+91-9971009669' }}</p>
                             <p class="footer-contact-mail">{{ $settings['contact_email'] ?? 'gm.amaanta@gmail.com' }}</p>
                         </div>
-                        <div class="footer-about-social-list"> <a href="#"><i class="ti-instagram"></i></a> <a href="#"><i class="ti-twitter"></i></a> <a href="#"><i class="ti-youtube"></i></a> <a href="https://www.facebook.com/amaantafarms/"><i class="ti-facebook"></i></a>  </div>
+                        <div class="footer-about-social-list"> <a href="#"><i class="ti-instagram"></i></a> <a href="#"><i class="fab fa-x"></i></a> <a href="#"><i class="ti-youtube"></i></a> <a href="https://www.facebook.com/amaantafarms/"><i class="ti-facebook"></i></a>  </div>
                     </div>
                 </div>
             </div>
