@@ -53,24 +53,44 @@
         </form>
 
         <div class="row">
-            <?php $__currentLoopData = $images; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $image): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                <div class="col-sm-6 col-md-4 col-lg-3 mb-4">
-                    <div class="card h-100">
-                        <img src="<?php echo e(asset('storage/' . ltrim($image->image_path, '/'))); ?>" class="card-img-top" alt="<?php echo e($image->title); ?>">
+            <?php $__currentLoopData = $groupedImages; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $title => $images): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                <div class="col-12 mb-5">
+                    <div class="card">
+                        <div class="card-header d-flex justify-content-between align-items-center">
+                            <h4 class="mb-0"><?php echo e($title); ?></h4>
+                            <div class="d-flex gap-2">
+                                <button class="btn btn-sm btn-primary" onclick="editGroup('<?php echo e($title); ?>')">
+                                    <i class="fas fa-edit"></i> Edit Group
+                                </button>
+                                <button class="btn btn-sm btn-danger" onclick="deleteGroup('<?php echo e($title); ?>')">
+                                    <i class="fas fa-trash"></i> Delete Group
+                                </button>
+                            </div>
+                        </div>
                         <div class="card-body">
-                            <h5 class="card-title"><?php echo e($image->title); ?></h5>
-                            <p class="card-text">
-                                <strong>Event:</strong> <?php echo e($image->event ? $image->event->title : 'N/A'); ?><br>
-                                <strong>Service:</strong> <?php echo e($image->service ? $image->service->title : 'N/A'); ?>
+                            <div class="row">
+                                <?php $__currentLoopData = $images; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $image): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                    <div class="col-sm-6 col-md-4 col-lg-3 mb-3">
+                                        <div class="card h-100">
+                                            <img src="<?php echo e(asset(ltrim($image->image_path, '/'))); ?>" class="card-img-top" alt="<?php echo e($image->title); ?>" style="height: 200px; object-fit: cover;">
+                                            <div class="card-body p-2">
+                                                <p class="card-text small mb-2">
+                                                    <strong>Event:</strong> <?php echo e($image->event ? $image->event->title : 'N/A'); ?><br>
+                                                    <strong>Service:</strong> <?php echo e($image->service ? $image->service->title : 'N/A'); ?>
 
-                            </p>
-                            <div class="d-flex justify-content-between">
-                                <a href="<?php echo e(route('admin.gallery.edit', $image)); ?>" class="btn btn-sm btn-primary">Edit</a>
-                                <form method="POST" action="<?php echo e(route('admin.gallery.destroy', $image)); ?>" onsubmit="return confirm('Are you sure?')" style="display: inline;">
-                                    <?php echo csrf_field(); ?>
-                                    <?php echo method_field('DELETE'); ?>
-                                    <button type="submit" class="btn btn-sm btn-danger">Delete</button>
-                                </form>
+                                                </p>
+                                                <div class="d-flex justify-content-between">
+                                                    <button class="btn btn-sm btn-outline-primary" onclick="editImage(<?php echo e($image->id); ?>)">
+                                                        <i class="fas fa-edit"></i>
+                                                    </button>
+                                                    <button class="btn btn-sm btn-outline-danger" onclick="deleteImage(<?php echo e($image->id); ?>, '<?php echo e($image->title); ?>')">
+                                                        <i class="fas fa-trash"></i>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                             </div>
                         </div>
                     </div>
@@ -79,6 +99,47 @@
         </div>
     </div>
 </div>
+
+<script>
+function editGroup(title) {
+    // Redirect to create page with title pre-filled for editing group
+    window.location.href = '<?php echo e(route("admin.gallery.create")); ?>?edit_group=' + encodeURIComponent(title);
+}
+
+function deleteGroup(title) {
+    if (confirm('Are you sure you want to delete all images in the "' + title + '" group?')) {
+        // Create a form to submit delete request for all images in the group
+        const form = document.createElement('form');
+        form.method = 'POST';
+        form.action = '<?php echo e(route("admin.gallery.delete-group")); ?>';
+        form.innerHTML = `
+            <?php echo csrf_field(); ?>
+            <?php echo method_field('DELETE'); ?>
+            <input type="hidden" name="title" value="${title}">
+        `;
+        document.body.appendChild(form);
+        form.submit();
+    }
+}
+
+function editImage(imageId) {
+    window.location.href = '<?php echo e(route("admin.gallery.edit", ":id")); ?>'.replace(':id', imageId);
+}
+
+function deleteImage(imageId, title) {
+    if (confirm('Are you sure you want to delete this image from "' + title + '" group?')) {
+        const form = document.createElement('form');
+        form.method = 'POST';
+        form.action = '<?php echo e(route("admin.gallery.destroy", ":id")); ?>'.replace(':id', imageId);
+        form.innerHTML = `
+            <?php echo csrf_field(); ?>
+            <?php echo method_field('DELETE'); ?>
+        `;
+        document.body.appendChild(form);
+        form.submit();
+    }
+}
+</script>
 <?php $__env->stopSection(); ?>
 
 <?php echo $__env->make('admin.layout', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?><?php /**PATH C:\xampp\htdocs\amaanta\resources\views/admin/gallery/index.blade.php ENDPATH**/ ?>

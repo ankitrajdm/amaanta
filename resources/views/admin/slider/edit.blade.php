@@ -37,7 +37,7 @@
                 <label class="form-label">Current Images</label>
                 <div>
                     @foreach($slider->images as $img)
-                        <img src="{{ asset('storage/' . ltrim($img->image_path, '/')) }}" alt="" width="60" style="margin:2px;">
+                        <img src="{{ asset(ltrim($img->image_path, '/')) }}" alt="" width="60" style="margin:2px;">
                     @endforeach
                 </div>
             </div>

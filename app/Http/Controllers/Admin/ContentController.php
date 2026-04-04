@@ -481,7 +481,9 @@ class ContentController extends Controller
 
     public function gallery(): View
     {
-        return view('admin.gallery.index', ['images' => GalleryImage::latest()->get()]);
+        $images = GalleryImage::latest()->get();
+        $groupedImages = $images->groupBy('title');
+        return view('admin.gallery.index', ['groupedImages' => $groupedImages]);
     }
 
     public function storeGallery(Request $request): RedirectResponse
@@ -1073,6 +1075,13 @@ class ContentController extends Controller
         return redirect()->route('admin.gallery.index')->with('status', 'Gallery image deleted.');
     }
 
+    public function destroyGalleryGroup(Request $request): RedirectResponse
+    {
+        $title = $request->input('title');
+        GalleryImage::where('title', $title)->delete();
+        return redirect()->route('admin.gallery.index')->with('status', 'Gallery group "' . $title . '" deleted.');
+    }
+
     public function destroyMenuItem(MenuItem $menuItem): RedirectResponse
     {
         $menuItem->delete();
@@ -1086,7 +1095,17 @@ class ContentController extends Controller
 
     public function createGallery(): View
     {
-        return view('admin.gallery.create');
+        $editGroup = request('edit_group');
+        $groupImages = null;
+
+        if ($editGroup) {
+            $groupImages = GalleryImage::where('title', $editGroup)->get();
+        }
+
+        return view('admin.gallery.create', [
+            'editGroup' => $editGroup,
+            'groupImages' => $groupImages
+        ]);
     }
 
     public function createContactForm(): View

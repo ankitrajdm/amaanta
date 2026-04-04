@@ -53,23 +53,43 @@
         </form>
 
         <div class="row">
-            @foreach($images as $image)
-                <div class="col-sm-6 col-md-4 col-lg-3 mb-4">
-                    <div class="card h-100">
-                        <img src="{{ asset('storage/' . ltrim($image->image_path, '/')) }}" class="card-img-top" alt="{{ $image->title }}">
+            @foreach($groupedImages as $title => $images)
+                <div class="col-12 mb-5">
+                    <div class="card">
+                        <div class="card-header d-flex justify-content-between align-items-center">
+                            <h4 class="mb-0">{{ $title }}</h4>
+                            <div class="d-flex gap-2">
+                                <button class="btn btn-sm btn-primary" onclick="editGroup('{{ $title }}')">
+                                    <i class="fas fa-edit"></i> Edit Group
+                                </button>
+                                <button class="btn btn-sm btn-danger" onclick="deleteGroup('{{ $title }}')">
+                                    <i class="fas fa-trash"></i> Delete Group
+                                </button>
+                            </div>
+                        </div>
                         <div class="card-body">
-                            <h5 class="card-title">{{ $image->title }}</h5>
-                            <p class="card-text">
-                                <strong>Event:</strong> {{ $image->event ? $image->event->title : 'N/A' }}<br>
-                                <strong>Service:</strong> {{ $image->service ? $image->service->title : 'N/A' }}
-                            </p>
-                            <div class="d-flex justify-content-between">
-                                <a href="{{ route('admin.gallery.edit', $image) }}" class="btn btn-sm btn-primary">Edit</a>
-                                <form method="POST" action="{{ route('admin.gallery.destroy', $image) }}" onsubmit="return confirm('Are you sure?')" style="display: inline;">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit" class="btn btn-sm btn-danger">Delete</button>
-                                </form>
+                            <div class="row">
+                                @foreach($images as $image)
+                                    <div class="col-sm-6 col-md-4 col-lg-3 mb-3">
+                                        <div class="card h-100">
+                                            <img src="{{ asset(ltrim($image->image_path, '/')) }}" class="card-img-top" alt="{{ $image->title }}" style="height: 200px; object-fit: cover;">
+                                            <div class="card-body p-2">
+                                                <p class="card-text small mb-2">
+                                                    <strong>Event:</strong> {{ $image->event ? $image->event->title : 'N/A' }}<br>
+                                                    <strong>Service:</strong> {{ $image->service ? $image->service->title : 'N/A' }}
+                                                </p>
+                                                <div class="d-flex justify-content-between">
+                                                    <button class="btn btn-sm btn-outline-primary" onclick="editImage({{ $image->id }})">
+                                                        <i class="fas fa-edit"></i>
+                                                    </button>
+                                                    <button class="btn btn-sm btn-outline-danger" onclick="deleteImage({{ $image->id }}, '{{ $image->title }}')">
+                                                        <i class="fas fa-trash"></i>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                @endforeach
                             </div>
                         </div>
                     </div>
@@ -78,4 +98,45 @@
         </div>
     </div>
 </div>
+
+<script>
+function editGroup(title) {
+    // Redirect to create page with title pre-filled for editing group
+    window.location.href = '{{ route("admin.gallery.create") }}?edit_group=' + encodeURIComponent(title);
+}
+
+function deleteGroup(title) {
+    if (confirm('Are you sure you want to delete all images in the "' + title + '" group?')) {
+        // Create a form to submit delete request for all images in the group
+        const form = document.createElement('form');
+        form.method = 'POST';
+        form.action = '{{ route("admin.gallery.delete-group") }}';
+        form.innerHTML = `
+            @csrf
+            @method('DELETE')
+            <input type="hidden" name="title" value="${title}">
+        `;
+        document.body.appendChild(form);
+        form.submit();
+    }
+}
+
+function editImage(imageId) {
+    window.location.href = '{{ route("admin.gallery.edit", ":id") }}'.replace(':id', imageId);
+}
+
+function deleteImage(imageId, title) {
+    if (confirm('Are you sure you want to delete this image from "' + title + '" group?')) {
+        const form = document.createElement('form');
+        form.method = 'POST';
+        form.action = '{{ route("admin.gallery.destroy", ":id") }}'.replace(':id', imageId);
+        form.innerHTML = `
+            @csrf
+            @method('DELETE')
+        `;
+        document.body.appendChild(form);
+        form.submit();
+    }
+}
+</script>
 @endsection

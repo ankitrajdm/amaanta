@@ -149,6 +149,7 @@ Route::middleware(['auth', 'role:admin,editor'])->prefix('admin')->name('admin.'
     Route::get('/gallery/{image}', [ContentController::class, 'editGallery'])->name('gallery.edit');
     Route::put('/gallery/{image}', [ContentController::class, 'updateGallery'])->name('gallery.update');
     Route::delete('/gallery/{image}', [ContentController::class, 'destroyGallery'])->name('gallery.destroy');
+    Route::delete('/gallery/group/delete', [ContentController::class, 'destroyGalleryGroup'])->name('gallery.delete-group');
 
     // Service Sliders Management
     Route::get('/sliders', [ContentController::class, 'sliders'])->name('sliders.index');
