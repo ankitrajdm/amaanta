@@ -28,9 +28,9 @@
                     </div>
 
                     <div class="mb-3">
-                        <label class="form-label fw-bold">Post Slug <span class="text-danger">*</span></label>
-                        <input type="text" name="slug" value="{{ old('slug', $post->slug ?? '') }}" required class="form-control" placeholder="post-url-slug">
-                        <small class="text-muted">Used for URLs. Must be unique.</small>
+                        <label class="form-label fw-bold">Post Slug <span class="text-muted">(Auto-generated from title)</span></label>
+                        <input type="text" name="slug" id="slugInput" value="{{ old('slug', $post->slug ?? '') }}" class="form-control" placeholder="auto-generated from title">
+                        <small class="text-muted">Used for URLs. Leave blank to auto-generate from title.</small>
                         @error('slug') <div class="text-danger small mt-1">{{ $message }}</div> @enderror
                     </div>
 
@@ -277,6 +277,30 @@ document.getElementById('tagInput').addEventListener('keypress', function(e) {
         addTagFromInput();
     }
 });
+
+// Auto-generate slug from title
+function generateSlugFromTitle() {
+    const titleInput = document.querySelector('input[name="title"]');
+    const slugInput = document.getElementById('slugInput');
+    
+    if (titleInput && slugInput) {
+        titleInput.addEventListener('input', function() {
+            const title = this.value;
+            // Convert to lowercase, replace spaces with hyphens, remove special characters
+            const slug = title
+                .toLowerCase()
+                .trim()
+                .replace(/[^\w\s-]/g, '')
+                .replace(/\s+/g, '-')
+                .replace(/-+/g, '-');
+            
+            slugInput.value = slug;
+        });
+    }
+}
+
+// Initialize slug generation on page load
+document.addEventListener('DOMContentLoaded', generateSlugFromTitle);
 </script>
 
 <!-- Add Category Modal -->

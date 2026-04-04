@@ -33,7 +33,12 @@
                 @forelse($posts as $post)
                     <div class="card feature-card mb-4">
                         @if($post->featured_image)
-                            <img src="{{ strpos($post->featured_image, 'http') === 0 || strpos($post->featured_image, '/') === 0 ? $post->featured_image : asset('storage/' . $post->featured_image) }}" style="height: 300px; object-fit: cover;" alt="{{ $post->title }}">
+                            @php
+                                $imageSrc = strpos($post->featured_image, 'http') === 0 || strpos($post->featured_image, '/') === 0 
+                                    ? $post->featured_image 
+                                    : asset('storage/' . $post->featured_image);
+                            @endphp
+                            <img src="{{ $imageSrc }}" style="height: 300px; object-fit: cover;" alt="{{ $post->title }}" onerror="this.parentElement.style.display='none'">
                         @else
                             <div style="height: 300px; background: linear-gradient(135deg, var(--accent), var(--primary)); display: flex; align-items: center; justify-content: center;">
                                 <i class="fas fa-newspaper fa-4x" style="color: rgba(255,255,255,0.3);"></i>

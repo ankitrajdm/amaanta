@@ -285,7 +285,15 @@
                     <div class="owl-carousel owl-theme">
                         @foreach($posts->take(6) as $post)
                         <div class="item">
-                            <div class="position-re o-hidden"> <img src="{{ $post->featured_image ?: '/assets/img/default-post.jpg' }}" alt="{{ $post->title }}"> </div>
+                            <div class="position-re o-hidden">
+                                @if($post->featured_image)
+                                    <img src="{{ strpos($post->featured_image, 'http') === 0 || strpos($post->featured_image, '/') === 0 ? $post->featured_image : asset('storage/' . $post->featured_image) }}" alt="{{ $post->title }}"> 
+                                @else
+                                    <div style="height: 200px; background: linear-gradient(135deg, var(--accent), var(--primary)); display: flex; align-items: center; justify-content: center;">
+                                        <i class="fas fa-newspaper fa-3x" style="color: rgba(255,255,255,0.3);"></i>
+                                    </div>
+                                @endif
+                            </div>
                             <div class="con"> 
                                 <span class="category">{{ $post->created_at->format('d M Y') }} in <a href="#0">{{ $post->category }}</a></span>
                                 <h5><a href="/blog/{{ $post->slug }}">{{ $post->title }}</a></h5>

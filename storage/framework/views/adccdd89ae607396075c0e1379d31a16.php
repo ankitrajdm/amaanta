@@ -287,7 +287,15 @@
                     <div class="owl-carousel owl-theme">
                         <?php $__currentLoopData = $posts->take(6); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $post): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                         <div class="item">
-                            <div class="position-re o-hidden"> <img src="<?php echo e($post->featured_image ?: '/assets/img/default-post.jpg'); ?>" alt="<?php echo e($post->title); ?>"> </div>
+                            <div class="position-re o-hidden">
+                                <?php if($post->featured_image): ?>
+                                    <img src="<?php echo e(strpos($post->featured_image, 'http') === 0 || strpos($post->featured_image, '/') === 0 ? $post->featured_image : asset('storage/' . $post->featured_image)); ?>" alt="<?php echo e($post->title); ?>"> 
+                                <?php else: ?>
+                                    <div style="height: 200px; background: linear-gradient(135deg, var(--accent), var(--primary)); display: flex; align-items: center; justify-content: center;">
+                                        <i class="fas fa-newspaper fa-3x" style="color: rgba(255,255,255,0.3);"></i>
+                                    </div>
+                                <?php endif; ?>
+                            </div>
                             <div class="con"> 
                                 <span class="category"><?php echo e($post->created_at->format('d M Y')); ?> in <a href="#0"><?php echo e($post->category); ?></a></span>
                                 <h5><a href="/blog/<?php echo e($post->slug); ?>"><?php echo e($post->title); ?></a></h5>

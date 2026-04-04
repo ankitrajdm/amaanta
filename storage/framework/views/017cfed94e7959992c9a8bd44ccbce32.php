@@ -1,13 +1,13 @@
-@php
+<?php
     $sections = collect();
-@endphp
+?>
 <!DOCTYPE html>
 <html lang="zxx">
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <title>{{ $post->title }} - {{ $settings['website_name'] ?? 'Amaanta Farms' }}</title>
+    <title><?php echo e($post->title); ?> - <?php echo e($settings['website_name'] ?? 'Amaanta Farms'); ?></title>
     <link rel="shortcut icon" href="/assets/img/favicon.png" />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Didact+Gothic&family=Playfair+Display:ital@0;1&display=swap">
     <link rel="stylesheet" href="/assets/css/plugins.css" />
@@ -50,13 +50,13 @@
 </head>
 <body>
     <!-- WhatsApp Icon -->
-    @if($settings['whatsapp_link'] ?? null)
+    <?php if($settings['whatsapp_link'] ?? null): ?>
     <div class="whatsapp-icon">
-        <a href="{{ $settings['whatsapp_link'] }}" target="_blank" title="Contact us on WhatsApp">
+        <a href="<?php echo e($settings['whatsapp_link']); ?>" target="_blank" title="Contact us on WhatsApp">
             <i class="fab fa-whatsapp"></i>
         </a>
     </div>
-    @endif
+    <?php endif; ?>
 
     <!-- Preloader -->
 <div class="preloader-bg"></div>
@@ -78,18 +78,18 @@
         <div class="container">
             <!-- Logo -->
             <div class="logo-wrapper">
-                <a class="logo" href="{{ route('home') }}"> <img src="/assets/img/logonew.png" class="logo-img" alt=""> </a>
+                <a class="logo" href="<?php echo e(route('home')); ?>"> <img src="/assets/img/logonew.png" class="logo-img" alt=""> </a>
             </div>
             <!-- Button -->
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation"> <span class="navbar-toggler-icon"><i class="ti-menu"></i></span> </button>
             <!-- Menu -->
             <div class="collapse navbar-collapse" id="navbar">
                 <ul class="navbar-nav ms-auto">
-                    <li class="nav-item"><a class="nav-link" href="{{ route('home') }}">Home</a></li>
-                    <li class="nav-item"><a class="nav-link" href="{{ route('about') }}">About</a></li>
-                    <li class="nav-item"><a class="nav-link" href="{{ route('services') }}">Memorybook</a></li>
-                    <li class="nav-item"><a class="nav-link" href="{{ route('memorybook') }}">Services</a></li>
-                    <li class="nav-item"><a class="nav-link" href="{{ route('contact') }}">Contact</a></li>
+                    <li class="nav-item"><a class="nav-link" href="<?php echo e(route('home')); ?>">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="<?php echo e(route('about')); ?>">About</a></li>
+                    <li class="nav-item"><a class="nav-link" href="<?php echo e(route('services')); ?>">Memorybook</a></li>
+                    <li class="nav-item"><a class="nav-link" href="<?php echo e(route('memorybook')); ?>">Services</a></li>
+                    <li class="nav-item"><a class="nav-link" href="<?php echo e(route('contact')); ?>">Contact</a></li>
                 </ul>
             </div>
         </div>
@@ -104,13 +104,14 @@
                         <div class="col-md-8">
                             <div class="slider-text-inner">
                                 <div class="desc">
-                                    <span class="category" style="color: #d4af37; font-size: 0.9rem;">{{ $post->created_at->format('M d, Y') }}</span>
-                                    <h1 style="font-family: 'Playfair Display', serif; color: white; font-size: 3rem; font-weight: 700; margin: 15px 0; line-height: 1.2;">{{ $post->title }}</h1>
-                                    @if($post->categories && $post->categories->count() > 0)
+                                    <span class="category" style="color: #d4af37; font-size: 0.9rem;"><?php echo e($post->created_at->format('M d, Y')); ?></span>
+                                    <h1 style="font-family: 'Playfair Display', serif; color: white; font-size: 3rem; font-weight: 700; margin: 15px 0; line-height: 1.2;"><?php echo e($post->title); ?></h1>
+                                    <?php if($post->categories && $post->categories->count() > 0): ?>
                                         <p style="color: rgba(255,255,255,0.9);">
-                                            <i class="fas fa-folder"></i> {{ $post->categories->first()->name }}
+                                            <i class="fas fa-folder"></i> <?php echo e($post->categories->first()->name); ?>
+
                                         </p>
-                                    @endif
+                                    <?php endif; ?>
                                 </div>
                             </div>
                         </div>
@@ -125,39 +126,41 @@
         <div class="container">
             <div class="row g-5">
                 <div class="col-lg-8">
-                    @if($post->featured_image)
+                    <?php if($post->featured_image): ?>
                         <div class="mb-4">
-                            <img src="{{ strpos($post->featured_image, 'http') === 0 || strpos($post->featured_image, '/') === 0 ? $post->featured_image : asset('storage/' . $post->featured_image) }}" alt="{{ $post->title }}" class="img-fluid" style="max-height: 500px; object-fit: cover; width: 100%; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.15);">
+                            <img src="<?php echo e(strpos($post->featured_image, 'http') === 0 || strpos($post->featured_image, '/') === 0 ? $post->featured_image : asset('storage/' . $post->featured_image)); ?>" alt="<?php echo e($post->title); ?>" class="img-fluid" style="max-height: 500px; object-fit: cover; width: 100%; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.15);">
                         </div>
-                    @endif
+                    <?php endif; ?>
 
                     <div style="color: #555; line-height: 1.9; font-size: 1.05rem;">
-                        {!! $post->content !!}
+                        <?php echo $post->content; ?>
+
                     </div>
 
                     <!-- Tags -->
-                    @if($post->tags && $post->tags->count() > 0)
+                    <?php if($post->tags && $post->tags->count() > 0): ?>
                         <div class="mt-5 pt-4" style="border-top: 1px solid #ddd;">
                             <h6 class="mb-3" style="font-family: 'Playfair Display', serif; color: #5a006d;">Tags:</h6>
-                            @foreach($post->tags as $tag)
-                                <a href="{{ route('blog', ['tag' => $tag->slug]) }}" class="badge" style="background: #5a006d; text-decoration: none; color: white; font-size: 0.9rem; padding: 0.5rem 0.75rem; margin: 0.25rem; display: inline-block;">
-                                    {{ $tag->name }}
+                            <?php $__currentLoopData = $post->tags; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $tag): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                <a href="<?php echo e(route('blog', ['tag' => $tag->slug])); ?>" class="badge" style="background: #5a006d; text-decoration: none; color: white; font-size: 0.9rem; padding: 0.5rem 0.75rem; margin: 0.25rem; display: inline-block;">
+                                    <?php echo e($tag->name); ?>
+
                                 </a>
-                            @endforeach
+                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                         </div>
-                    @endif
+                    <?php endif; ?>
 
                     <!-- Share -->
                     <div class="mt-5 pt-4" style="border-top: 1px solid #ddd;">
                         <h6 class="mb-3" style="font-family: 'Playfair Display', serif; color: #5a006d;">Share Article:</h6>
                         <div>
-                            <a href="https://www.facebook.com/sharer/sharer.php?u={{ url()->full() }}" target="_blank" class="butn-dark" style="background: #3b5998; color: white; text-decoration: none; padding: 8px 15px; margin-right: 10px; border-radius: 4px; display: inline-block;">
+                            <a href="https://www.facebook.com/sharer/sharer.php?u=<?php echo e(url()->full()); ?>" target="_blank" class="butn-dark" style="background: #3b5998; color: white; text-decoration: none; padding: 8px 15px; margin-right: 10px; border-radius: 4px; display: inline-block;">
                                 <i class="fab fa-facebook-f"></i> Facebook
                             </a>
-                            <a href="https://twitter.com/intent/tweet?url={{ url()->full() }}&text={{ urlencode($post->title) }}" target="_blank" style="background: #1DA1F2; color: white; text-decoration: none; padding: 8px 15px; margin-right: 10px; border-radius: 4px; display: inline-block;">
+                            <a href="https://twitter.com/intent/tweet?url=<?php echo e(url()->full()); ?>&text=<?php echo e(urlencode($post->title)); ?>" target="_blank" style="background: #1DA1F2; color: white; text-decoration: none; padding: 8px 15px; margin-right: 10px; border-radius: 4px; display: inline-block;">
                                 <i class="fab fa-twitter"></i> Twitter
                             </a>
-                            <a href="https://www.linkedin.com/sharing/share-offsite/?url={{ url()->full() }}" target="_blank" style="background: #0077b5; color: white; text-decoration: none; padding: 8px 15px; border-radius: 4px; display: inline-block;">
+                            <a href="https://www.linkedin.com/sharing/share-offsite/?url=<?php echo e(url()->full()); ?>" target="_blank" style="background: #0077b5; color: white; text-decoration: none; padding: 8px 15px; border-radius: 4px; display: inline-block;">
                                 <i class="fab fa-linkedin-in"></i> LinkedIn
                             </a>
                         </div>
@@ -170,34 +173,38 @@
                     <div style="background: #f8f6f3; padding: 25px; border-radius: 8px; margin-bottom: 25px;">
                         <h6 style="font-family: 'Playfair Display', serif; color: #5a006d; margin-bottom: 15px;">Quick Info</h6>
                         <p style="margin-bottom: 15px; color: #666;">
-                            <strong style="color: #5a006d;">Published:</strong><br> {{ $post->created_at->format('M d, Y') }}
+                            <strong style="color: #5a006d;">Published:</strong><br> <?php echo e($post->created_at->format('M d, Y')); ?>
+
                         </p>
-                        @if($post->categories && $post->categories->count() > 0)
+                        <?php if($post->categories && $post->categories->count() > 0): ?>
                             <p style="color: #666;">
                                 <strong style="color: #5a006d;">Category:</strong><br>
-                                <a href="{{ route('blog', ['category' => $post->categories->first()->slug]) }}" style="color: #5a006d; text-decoration: none; font-weight: 500;">
-                                    {{ $post->categories->first()->name }}
+                                <a href="<?php echo e(route('blog', ['category' => $post->categories->first()->slug])); ?>" style="color: #5a006d; text-decoration: none; font-weight: 500;">
+                                    <?php echo e($post->categories->first()->name); ?>
+
                                 </a>
                             </p>
-                        @endif
+                        <?php endif; ?>
                     </div>
 
                     <!-- Related Articles -->
-                    @if($relatedPosts && $relatedPosts->count() > 0)
+                    <?php if($relatedPosts && $relatedPosts->count() > 0): ?>
                         <div style="background: #f8f6f3; padding: 25px; border-radius: 8px;">
                             <h6 style="font-family: 'Playfair Display', serif; color: #5a006d; margin-bottom: 20px;">Related Articles</h6>
-                            @foreach($relatedPosts as $related)
+                            <?php $__currentLoopData = $relatedPosts; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $related): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                 <div style="margin-bottom: 15px; padding-bottom: 15px; border-bottom: 1px solid #ddd;">
-                                    <a href="{{ route('blog.detail', $related->slug) }}" style="color: #5a006d; text-decoration: none; font-weight: 500; display: block; margin-bottom: 5px;">
-                                        {{ $related->title }}
+                                    <a href="<?php echo e(route('blog.detail', $related->slug)); ?>" style="color: #5a006d; text-decoration: none; font-weight: 500; display: block; margin-bottom: 5px;">
+                                        <?php echo e($related->title); ?>
+
                                     </a>
                                     <p style="color: #999; font-size: 0.85rem; margin: 0;">
-                                        <i class="fas fa-calendar-alt"></i> {{ $related->created_at->format('M d, Y') }}
+                                        <i class="fas fa-calendar-alt"></i> <?php echo e($related->created_at->format('M d, Y')); ?>
+
                                     </p>
                                 </div>
-                            @endforeach
+                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                         </div>
-                    @endif
+                    <?php endif; ?>
                 </div>
             </div>
         </div>
@@ -210,30 +217,30 @@
             <div class="row">
                 <div class="col-md-4">
                     <div class="footer-column footer-about">
-                        <h3 class="footer-title"><a class="logo" href="{{ route('home') }}"> <img src="/assets/img/logonew.png" class="logo-img" alt=""> </a></h3>
-                        <p class="footer-about-text">{{ $settings['footer_about'] ?? 'Amaanta, a world class farm in Delhi is a natural haven that provides a sense of tranquility. Amaanta has a lush green 2.5 acre farm and a semi-covered area of approximately 13,000 sq. feet and has been a landmark in the vicinity for over 8 years.' }}</p>
+                        <h3 class="footer-title"><a class="logo" href="<?php echo e(route('home')); ?>"> <img src="/assets/img/logonew.png" class="logo-img" alt=""> </a></h3>
+                        <p class="footer-about-text"><?php echo e($settings['footer_about'] ?? 'Amaanta, a world class farm in Delhi is a natural haven that provides a sense of tranquility. Amaanta has a lush green 2.5 acre farm and a semi-covered area of approximately 13,000 sq. feet and has been a landmark in the vicinity for over 8 years.'); ?></p>
                     </div>
                 </div>
                 <div class="col-md-3 offset-md-1">
                     <div class="footer-column footer-explore clearfix">
                         <h3 class="footer-title">Explore</h3>
                         <ul class="footer-explore-list list-unstyled">
-                            <li><a href="{{ route('about') }}">About</a></li>
-                            <li><a href="{{ route('services') }}">Services</a></li>
-                            <li><a href="{{ route('memorybook') }}">Memorybook</a></li>
-                            <li><a href="{{ route('blog') }}">Blog</a></li>
-                            <li><a href="{{ route('contact') }}">Contact</a></li>
-                            <li><a href="{{ route('guest-feedback') }}">Guest Feedback</a></li>
+                            <li><a href="<?php echo e(route('about')); ?>">About</a></li>
+                            <li><a href="<?php echo e(route('services')); ?>">Services</a></li>
+                            <li><a href="<?php echo e(route('memorybook')); ?>">Memorybook</a></li>
+                            <li><a href="<?php echo e(route('blog')); ?>">Blog</a></li>
+                            <li><a href="<?php echo e(route('contact')); ?>">Contact</a></li>
+                            <li><a href="<?php echo e(route('guest-feedback')); ?>">Guest Feedback</a></li>
                         </ul>
                     </div>
                 </div>
                 <div class="col-md-4">
                     <div class="footer-column footer-contact">
                         <h3 class="footer-title">Get in touch</h3>
-                        <p class="footer-contact-text">{{ $settings['address'] ?? '68-73 Bijwasan Road, Kapashera, New Delhi - 37' }}</p>
+                        <p class="footer-contact-text"><?php echo e($settings['address'] ?? '68-73 Bijwasan Road, Kapashera, New Delhi - 37'); ?></p>
                         <div class="footer-contact-info">
-                            <p class="footer-contact-phone"><span class="ti-headphone-alt"></span> {{ $settings['contact_no'] ?? '+91-9971009669' }}</p>
-                            <p class="footer-contact-mail">{{ $settings['contact_email'] ?? 'gm.amaanta@gmail.com' }}</p>
+                            <p class="footer-contact-phone"><span class="ti-headphone-alt"></span> <?php echo e($settings['contact_no'] ?? '+91-9971009669'); ?></p>
+                            <p class="footer-contact-mail"><?php echo e($settings['contact_email'] ?? 'gm.amaanta@gmail.com'); ?></p>
                         </div>
                         <div class="footer-about-social-list"> <a href="#"><i class="ti-instagram"></i></a> <a href="#"><i class="ti-twitter"></i></a> <a href="#"><i class="ti-youtube"></i></a> <a href="https://www.facebook.com/amaantafarms/"><i class="ti-facebook"></i></a>  </div>
                     </div>
@@ -246,7 +253,7 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="footer-bottom-inner">
-                        <p class="footer-bottom-copy-right">Copyright © {{ now()->year }}  <a href="/" target="_blank">Amaanta</a></p>
+                        <p class="footer-bottom-copy-right">Copyright © <?php echo e(now()->year); ?>  <a href="/" target="_blank">Amaanta</a></p>
                     </div>
                 </div>
             </div>
@@ -281,3 +288,4 @@
 </script>
 </body>
 </html>
+<?php /**PATH C:\xampp\htdocs\amaanta\resources\views/pages/blog-detail.blade.php ENDPATH**/ ?>

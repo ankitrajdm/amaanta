@@ -420,7 +420,7 @@ class ContentController extends Controller
     {
         $validated = $request->validate([
             'title' => ['required', 'string', 'max:180'],
-            'slug' => ['required', 'string', 'max:180'],
+            'slug' => ['nullable', 'string', 'max:180'],
             'category' => ['nullable', 'string', 'max:100'],
             'excerpt' => ['nullable', 'string', 'max:255'],
             'content' => ['required', 'string'],
@@ -429,6 +429,11 @@ class ContentController extends Controller
             'is_published' => ['nullable', 'boolean'],
             'tags' => ['nullable', 'string'],
         ]);
+        
+        // Auto-generate slug from title if not provided
+        if (empty($validated['slug'])) {
+            $validated['slug'] = \Illuminate\Support\Str::slug($validated['title']);
+        }
         
         $validated['is_published'] = (bool) ($validated['is_published'] ?? false);
         $validated['published_at'] = now();
@@ -960,7 +965,7 @@ class ContentController extends Controller
     {
         $validated = $request->validate([
             'title' => ['required', 'string', 'max:180'],
-            'slug' => ['required', 'string', 'max:180'],
+            'slug' => ['nullable', 'string', 'max:180'],
             'category' => ['nullable', 'string', 'max:100'],
             'excerpt' => ['nullable', 'string', 'max:255'],
             'content' => ['required', 'string'],
@@ -969,6 +974,11 @@ class ContentController extends Controller
             'is_published' => ['nullable', 'boolean'],
             'tags' => ['nullable', 'string'],
         ]);
+        
+        // Auto-generate slug from title if not provided
+        if (empty($validated['slug'])) {
+            $validated['slug'] = \Illuminate\Support\Str::slug($validated['title']);
+        }
         
         $validated['is_published'] = (bool) ($validated['is_published'] ?? false);
         
